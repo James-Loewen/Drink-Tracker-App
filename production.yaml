@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: drink_tracker_production_postgres
+    container_name: drink_tracker_production_postgres
+    volumes:
+      - drink_tracker_production_postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.envs/.production/.postgres.env
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    image: drink_tracker_production_django
+    container_name: drink_tracker_production_django
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app:z
+    env_file:
+      - ./.envs/.production/.django.env
+      - ./.envs/.production/.postgres.env
+    expose:
+      - 8000
+    command: /start
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./compose/production/nginx/Dockerfile
+    image: drink_tracker_production_nginx
+    container_name: drink_tracker_production_nginx
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app:z
+      - /app/node_modules
+    ports:
+      - 80:80
+      - 443:443
+
+volumes:
+  drink_tracker_production_postgres_data:

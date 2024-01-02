@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: drink_tracker_local_postgres
+    container_name: drink_tracker_local_postgres
+    volumes:
+      - drink_tracker_local_postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.envs/.local/.postgres.env
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: drink_tracker_local_django
+    container_name: drink_tracker_local_django
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app:z
+    env_file:
+      - ./.envs/.local/.django.env
+      - ./.envs/.local/.postgres.env
+    ports:
+      - 8000:8000
+    command: /start
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./compose/local/react/Dockerfile
+    image: drink_tracker_local_react
+    container_name: drink_tracker_local_react
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app:z
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    command: npm run dev
+
+volumes:
+  drink_tracker_local_postgres_data:

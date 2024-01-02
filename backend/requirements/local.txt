@@ -1,0 +1,4 @@
+-r base.txt
+
+# CORS headers needed for developing on separate ports.
+django-cors-headers==4.3.1

@@ -1,0 +1,14 @@
+.envs/
+
+# Nginx / React
+node_modules/
+dist/
+certs/
+
+# Django
+*.sqlite3
+__pycache__/
+*.pyc
+
+# General
+.notes/
