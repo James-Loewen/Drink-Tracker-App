@@ -5,7 +5,6 @@ interface BarChartAxisBottomTickProps extends AxisTickProps<any> {
 }
 
 function BarChartAxisBottomTick(props: BarChartAxisBottomTickProps) {
-  console.log(props);
   const value = props.screenWidth > 650 ? props.value : props.value.slice(0, 3);
 
   return (

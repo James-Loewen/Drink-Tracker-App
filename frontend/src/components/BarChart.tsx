@@ -6,13 +6,17 @@ import {
 
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import BarChartAxisBottomTick from "./BarChartAxisBottomTick";
+import generateAxisTicks from "../utils/generateAxisTicks";
 
 type BarChartProps = {
   data: BarDatum[];
 };
 
 function BarChart({ data }: BarChartProps) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
+  console.log(data);
+
+  const tickValues = generateAxisTicks(data);
 
   function barLabelColor(d: ComputedBarDatumWithValue<BarDatum>) {
     if (d.data.value >= 4) {
@@ -21,8 +25,6 @@ function BarChart({ data }: BarChartProps) {
       return "#22232A";
     }
   }
-
-  console.log(`${width}x${height}`);
 
   return (
     <div className="w-full h-[450px]">
@@ -55,6 +57,7 @@ function BarChart({ data }: BarChartProps) {
           tickSize: 0,
           tickPadding: 5,
           tickRotation: 0,
+          tickValues: tickValues,
         }}
         labelTextColor={barLabelColor}
         theme={{
@@ -108,3 +111,41 @@ function BarChart({ data }: BarChartProps) {
 }
 
 export default BarChart;
+
+// arr = [
+//   {
+//     day: "Sunday",
+//     count1: 3,
+//     count2: 3.2,
+//   },
+//   {
+//     day: "Monday",
+//     count1: 4,
+//     count2: 4.2,
+//   },
+//   {
+//     day: "Tuesday",
+//     count1: 5,
+//     count2: 5.1,
+//   },
+//   {
+//     day: "Wednesday",
+//     count1: 1,
+//     count2: 1.1,
+//   },
+//   {
+//     day: "Thursday",
+//     count1: 6,
+//     count2: 5.5,
+//   },
+//   {
+//     day: "Friday",
+//     count1: 4,
+//     count2: 3.9,
+//   },
+//   {
+//     day: "Saturday",
+//     count1: 2,
+//     count2: 2.6,
+//   },
+// ];
