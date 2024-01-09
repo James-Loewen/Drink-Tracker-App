@@ -17,3 +17,7 @@ CACHES = {
 }
 
 EMAIL_BACKEND = "django.core.mail.backend.console.EmailBackend"
+
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", [])
+
+CORS_ALLOW_CREDENTIALS = True

@@ -1,0 +1,50 @@
+#burger-button {
+  /* Custom Properties */
+  --menu-bar-width: 24px;
+  --menu-bar-thickness: 3px;
+  --menu-bar-gap: 5px;
+  --actual-gap: calc(var(--menu-bar-gap) + var(--menu-bar-thickness));
+  /* Style Declarations */
+  border: none;
+  padding: 1rem 0.5rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.bars,
+.bars::before,
+.bars::after {
+  position: relative;
+  display: block;
+  width: var(--menu-bar-width);
+  height: var(--menu-bar-thickness);
+  background-color: #22232a;
+  border-radius: 1000px;
+  transition: all ease 300ms;
+}
+
+.bars::before {
+  content: "";
+  position: absolute;
+  bottom: var(--actual-gap);
+}
+
+.bars::after {
+  content: "";
+  position: absolute;
+  top: var(--actual-gap);
+}
+
+.bars.open {
+  background-color: transparent;
+}
+
+.bars.open::before {
+  --transY-distance: var(--actual-gap);
+  transform: translateY(var(--transY-distance)) rotate(45deg) scaleX(1.25);
+}
+
+.bars.open::after {
+  --transY-distance: calc(-1 * var(--actual-gap));
+  transform: translateY(var(--transY-distance)) rotate(-45deg) scaleX(1.25);
+}
