@@ -5,7 +5,6 @@ function Root() {
   return (
     <>
       <Header />
-      <h1>Root to boot</h1>
       <Outlet />
     </>
   );
