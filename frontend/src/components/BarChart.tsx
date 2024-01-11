@@ -1,8 +1,5 @@
-import {
-  ResponsiveBar,
-  type BarDatum,
-  type ComputedBarDatumWithValue,
-} from "@nivo/bar";
+import { ResponsiveBar, type BarDatum } from "@nivo/bar";
+import { clsx } from "clsx";
 
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import BarChartAxisBottomTick from "./BarChartAxisBottomTick";
@@ -17,96 +14,109 @@ function BarChart({ data }: BarChartProps) {
   console.log(data);
 
   const tickValues = generateAxisTicks(data);
-
-  function barLabelColor(d: ComputedBarDatumWithValue<BarDatum>) {
-    if (d.data.value >= 4) {
-      return "#8B6666";
-    } else {
-      return "#22232A";
-    }
-  }
+  const containerCount = data.reduce((sum, day) => sum + +day.Containers, 0);
+  const standardDrinkCount = data
+    .reduce((sum, day) => sum + +day["Standard Drinks"], 0)
+    .toFixed(2);
 
   return (
-    <div className="w-full h-[450px]">
-      <ResponsiveBar
-        data={data}
-        keys={["count1", "count2"]}
-        indexBy="day"
-        margin={{ top: 50, right: 20, bottom: 80, left: 25 }}
-        padding={0.3}
-        innerPadding={width > 600 ? 8 : 2}
-        valueScale={{ type: "linear" }}
-        indexScale={{ type: "band", round: true }}
-        colors={{ scheme: "pastel1" }}
-        borderRadius={3}
-        borderColor={{
-          from: "color",
-          modifiers: [["darker", 1.6]],
-        }}
-        groupMode="grouped"
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          renderTick: (props) => (
-            <BarChartAxisBottomTick screenWidth={width} {...props} />
-          ),
-        }}
-        axisLeft={{
-          tickSize: 0,
-          tickPadding: 5,
-          tickRotation: 0,
-          tickValues: tickValues,
-        }}
-        labelTextColor={barLabelColor}
-        theme={{
-          text: { fontSize: 16, fontFamily: "monospace" },
-        }}
-        legends={[
-          {
-            dataFrom: "keys",
-            anchor: "bottom",
-            direction: "row",
-            justify: false,
-            translateX: 0,
-            translateY: 80,
-            itemsSpacing: 2,
-            itemWidth: 100,
-            itemHeight: 20,
-            itemDirection: "left-to-right",
-            itemOpacity: 0.85,
-            symbolSize: 20,
-            symbolShape: "circle",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemOpacity: 1,
-                },
+    <>
+      <div className="w-full h-[450px]">
+        <ResponsiveBar
+          data={data}
+          keys={["Containers", "Standard Drinks"]}
+          indexBy="day"
+          margin={{ top: 50, right: 20, bottom: 80, left: 25 }}
+          padding={0.2}
+          innerPadding={width > 600 ? 8 : 8}
+          valueScale={{ type: "linear" }}
+          indexScale={{ type: "band", round: true }}
+          colors={["#DAA520", "#216A6F"]}
+          borderRadius={3}
+          // borderColor={{
+          //   from: "color",
+          //   modifiers: [["darker", 1.6]],
+          // }}
+          // borderColor={(d) => {
+          //   if (d.data.value > 4) {
+          //     return "rgba(255, 0, 0, .5)";
+          //   } else {
+          //     return d.color;
+          //   }
+          // }}
+          // borderWidth={2}
+          markers={[
+            {
+              axis: "y",
+              value: 4,
+              lineStyle: {
+                stroke: "rgba(100, 0, 30, .35)",
+                strokeWidth: 2,
+                strokeDasharray: "8",
               },
-            ],
-          },
-        ]}
-        // markers={[
-        //   {
-        //     axis: "y",
-        //     value: 4,
-        //     lineStyle: {
-        //       stroke: "rgba(34, 35, 42, .25)",
-        //       strokeWidth: 2,
-        //     },
-        //     legend: "4/day limit",
-        //     legendOrientation: "horizontal",
-        //   },
-        // ]}
-        role="application"
-        ariaLabel="Nivo bar chart demo"
-        barAriaLabel={(e) =>
-          e.id + ": " + e.formattedValue + " in country: " + e.indexValue
-        }
-      />
-    </div>
+            },
+          ]}
+          groupMode="grouped"
+          minValue={0}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            renderTick: (props) => (
+              <BarChartAxisBottomTick screenWidth={width} {...props} />
+            ),
+          }}
+          axisLeft={{
+            tickSize: 0,
+            tickPadding: 5,
+            tickRotation: 0,
+            tickValues: tickValues,
+          }}
+          label={""}
+          theme={{
+            text: { fontSize: 16, fontFamily: "monospace" },
+          }}
+          legends={[
+            {
+              dataFrom: "keys",
+              anchor: "bottom",
+              direction: "row",
+              justify: false,
+              translateX: -20,
+              translateY: 80,
+              itemsSpacing: 40,
+              itemWidth: 100,
+              itemHeight: 20,
+              itemDirection: "left-to-right",
+              itemOpacity: 0.85,
+              symbolSize: 15,
+              symbolShape: "circle",
+            },
+          ]}
+          role="application"
+          ariaLabel="Nivo bar chart demo"
+          barAriaLabel={(e) =>
+            e.id + ": " + e.formattedValue + " in country: " + e.indexValue
+          }
+        />
+      </div>
+      <div className="static">
+        <p className={clsx(containerCount > 14 && "text-red-700")}>
+          Containers: {containerCount}
+        </p>
+        <p className={clsx(+standardDrinkCount > 14 && "text-red-700")}>
+          Standard Drinks: {standardDrinkCount}
+        </p>
+      </div>
+      <a
+        href="https://codesandbox.io/p/sandbox/vibrant-ives-3gkfx?file=%2Fsrc%2FBusinessIntelligence.js%3A65%2C22"
+        target="_blank"
+        className="text-blue-600 underline"
+      >
+        Grouped bar shared tooltip
+      </a>
+    </>
   );
 }
 

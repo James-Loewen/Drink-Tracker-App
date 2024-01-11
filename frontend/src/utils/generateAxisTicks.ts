@@ -1,6 +1,7 @@
 function getHighest(data: any) {
   const highest = data.reduce(
-    (acc: number, obj: any) => Math.max(acc, obj.count1, obj.count2),
+    (acc: number, obj: any) =>
+      Math.max(acc, obj.Containers, obj["Standard Drinks"]),
     0
   );
   return highest;
