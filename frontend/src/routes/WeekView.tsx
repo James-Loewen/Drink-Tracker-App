@@ -1,5 +1,6 @@
 // import type { BarDatum } from "@nivo/bar";
 import { useState } from "react";
+import Button from "../components/Button";
 import BarChart from "../components/BarChart";
 import generateWeeklyData from "../data/generateWeeklyData";
 
@@ -9,12 +10,12 @@ function WeekView() {
   return (
     <>
       <BarChart data={dataset} />
-      <button
+      <Button
         onClick={() => setDataset(generateWeeklyData())}
-        className="px-2 py-1 rounded-md bg-black text-white"
+        variant="primary"
       >
         Randomize
-      </button>
+      </Button>
     </>
   );
 }

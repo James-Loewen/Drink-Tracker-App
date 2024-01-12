@@ -11,7 +11,7 @@ type BarChartProps = {
 
 function BarChart({ data }: BarChartProps) {
   const { width } = useWindowDimensions();
-  console.log(data);
+  // console.log(data);
 
   const tickValues = generateAxisTicks(data);
   const containerCount = data.reduce((sum, day) => sum + +day.Containers, 0);
@@ -21,17 +21,17 @@ function BarChart({ data }: BarChartProps) {
 
   return (
     <>
-      <div className="w-full h-[450px]">
+      <div className="w-full h-[350px]">
         <ResponsiveBar
           data={data}
           keys={["Containers", "Standard Drinks"]}
           indexBy="day"
           margin={{ top: 50, right: 20, bottom: 80, left: 25 }}
-          padding={0.2}
-          innerPadding={width > 600 ? 8 : 8}
+          padding={0.3}
+          innerPadding={width > 600 ? 8 : 3}
           valueScale={{ type: "linear" }}
           indexScale={{ type: "band", round: true }}
-          colors={["#DAA520", "#216A6F"]}
+          colors={["rgba(33, 106, 111, .85)", "rgba(218, 165, 32, .85)"]}
           borderRadius={3}
           // borderColor={{
           //   from: "color",
@@ -84,7 +84,7 @@ function BarChart({ data }: BarChartProps) {
               direction: "row",
               justify: false,
               translateX: -20,
-              translateY: 80,
+              translateY: 65,
               itemsSpacing: 40,
               itemWidth: 100,
               itemHeight: 20,

@@ -5,6 +5,13 @@ function Root() {
   return (
     <>
       <Header />
+      <nav>
+        <ul className="flex gap-8 justify-center">
+          <li>Year</li>
+          <li>Month</li>
+          <li>Week</li>
+        </ul>
+      </nav>
       <Outlet />
     </>
   );

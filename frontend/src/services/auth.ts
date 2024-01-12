@@ -61,7 +61,8 @@ export async function logout() {
   });
   if (res.status === 200) {
     console.log("Logged out!");
-    window.location.assign("/login");
+    // window.location.assign("/login");
+    window.location.assign("/");
   } else {
     console.log("What the hell happened...");
   }

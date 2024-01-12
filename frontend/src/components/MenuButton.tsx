@@ -1,16 +1,14 @@
-import { useState } from "react";
 import clsx from "clsx";
 import styles from "./MenuButton.module.css";
 
 type MenuButtonProps = {
   className?: string;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function MenuButton({ className }: MenuButtonProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    console.log(e.target);
+function MenuButton({ className, isOpen, setIsOpen }: MenuButtonProps) {
+  function handleClick() {
     setIsOpen(!isOpen);
   }
 
@@ -22,7 +20,7 @@ function MenuButton({ className }: MenuButtonProps) {
       id={styles.burgerButton}
       aria-haspopup="menu"
       aria-label="Open menu"
-      aria-expanded="false"
+      aria-expanded={isOpen}
       onClick={handleClick}
       className={className}
     >

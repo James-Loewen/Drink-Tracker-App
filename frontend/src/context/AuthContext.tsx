@@ -8,9 +8,9 @@ import {
 import { login, logout, type LoginResponseType } from "../services/auth";
 
 type UserDetails = {
-  username: string;
-  display_username: string;
-  display_name: string;
+  fullName: string;
+  displayUsername: string;
+  displayName: string;
   email: string;
 };
 
@@ -44,7 +44,7 @@ export function AuthProvider({ children }: AuthProps) {
       }
 
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setIsLoading(false);
       setUser(data);
     }
@@ -53,7 +53,11 @@ export function AuthProvider({ children }: AuthProps) {
   }, []);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <h1 className="font-bold text-lg">Loading...</h1>
+      </div>
+    );
   }
 
   return (
