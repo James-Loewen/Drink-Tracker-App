@@ -2,28 +2,11 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
+
 User = get_user_model()
 
 
-class CamelCaseMixin:
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        return {self.to_camel_case(k): v for k, v in data.items()}
-
-    def to_internal_value(self, data):
-        return {self.to_snake_case(k): v for k, v in data.items()}
-
-    def to_camel_case(self, snake_str):
-        components = snake_str.split("_")
-        return components[0] + "".join(s.title() for s in components[1:])
-
-    def to_snake_case(self, camel_str):
-        return "".join(
-            ["_" + s.lower() if s.isupper() else s for s in camel_str]
-        ).lstrip("_")
-
-
-class LoginSerializer(CamelCaseMixin, serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     username_or_email = serializers.CharField(max_length=150, required=True)
     password = serializers.CharField(
         style={"input_type": "password", "placeholder": "password"},
@@ -67,7 +50,7 @@ class RegisterSerializer(serializers.Serializer):
         return user
 
 
-class UserDetailsSerializer(CamelCaseMixin, serializers.ModelSerializer):
+class UserDetailsSerializer(serializers.ModelSerializer):
     """User model without password"""
 
     username = serializers.CharField(write_only=True, required=False)

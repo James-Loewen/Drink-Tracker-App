@@ -1,6 +1,10 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Category, Brand, Beverage
+
+
+User = get_user_model()
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -22,11 +26,11 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class BeverageSerializer(serializers.ModelSerializer):
-    # For reading
+    # Read only
     category = CategorySerializer(read_only=True)
     brand = BrandSerializer(read_only=True)
 
-    # For writing
+    # Write only
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), source="category", write_only=True
     )

@@ -13,7 +13,7 @@ function Search() {
     const url = new URL("http://localhost:8000/beverages/");
     url.searchParams.set("q", query);
     console.log(url);
-    const res = await fetch(url);
+    const res = await fetch(url, { credentials: "include" });
     const data = await res.json();
     console.log(data);
 

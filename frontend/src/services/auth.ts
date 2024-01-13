@@ -19,7 +19,7 @@ export type LoginResponseType = {
   data: LoginDataType | null;
 };
 
-export async function login(usernameOrEmail: string, password: string) {
+export async function login(username_or_email: string, password: string) {
   let data: LoginDataType | null = null;
   let error: ErrorType | null = null;
   let success: boolean = false;
@@ -32,7 +32,7 @@ export async function login(usernameOrEmail: string, password: string) {
       "Content-Type": "application/json",
       "X-CSRFToken": getCookie("csrftoken")!,
     },
-    body: JSON.stringify({ usernameOrEmail, password }),
+    body: JSON.stringify({ username_or_email, password }),
   });
 
   if (res.status === 200) {

@@ -55,3 +55,8 @@ class User(AbstractUser):
         self.username = self.username.lower()
         self.email = self.email.lower()
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        if self.display_name:
+            return self.display_name
+        return self.display_username

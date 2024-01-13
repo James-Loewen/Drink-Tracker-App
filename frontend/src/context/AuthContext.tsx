@@ -8,9 +8,9 @@ import {
 import { login, logout, type LoginResponseType } from "../services/auth";
 
 type UserDetails = {
-  fullName: string;
-  displayUsername: string;
-  displayName: string;
+  full_name: string;
+  display_username: string;
+  display_name: string;
   email: string;
 };
 
