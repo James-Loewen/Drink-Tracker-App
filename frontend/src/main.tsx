@@ -18,6 +18,7 @@ import { fetchDrinkLog } from "./api/drinkLog";
 import { isSameDay } from "date-fns";
 import calculateStandardDrinks from "./utils/calculateStandardDrinks";
 import { formatBarChartDataset } from "./utils/formatDataset";
+import { ModalProvider } from "./context/ModalContext";
 
 const router = createBrowserRouter([
   {
@@ -70,7 +71,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ModalProvider>
+        <RouterProvider router={router} />
+      </ModalProvider>
     </AuthProvider>
   </React.StrictMode>
 );

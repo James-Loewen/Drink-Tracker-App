@@ -23,9 +23,9 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>(null!);
 
-type AuthProps = {
+interface AuthProps {
   children: ReactNode;
-};
+}
 
 export function AuthProvider({ children }: AuthProps) {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,7 +1,12 @@
 import { Outlet, Link } from "react-router-dom";
 import Header from "../components/Header";
+import ModalManager from "../components/ModalManager";
+import Button from "../components/Button";
+import { useModal } from "../context/ModalContext";
 
 function Root() {
+  const { setModal } = useModal();
+
   return (
     <>
       <Header />
@@ -19,6 +24,8 @@ function Root() {
         </ul>
       </nav>
       <Outlet />
+      <Button onClick={() => setModal("sampleModal")}>Uh... modal</Button>
+      <ModalManager />
     </>
   );
 }
