@@ -14,10 +14,28 @@ type ErrorType = {
   detail: string;
 };
 
+interface FetchParams {
+  input: RequestInfo | URL;
+  init?: RequestInit | undefined;
+}
+
 export type LoginResponseType = {
   error: ErrorType | null;
   data: LoginDataType | null;
 };
+
+export async function authFetch(
+  input: RequestInfo | URL,
+  init: RequestInit | undefined = undefined
+) {
+  const res = await fetch(input, init);
+
+  if (res.status === 403) {
+    window.location.assign("/login");
+  }
+
+  return res;
+}
 
 export async function login(username_or_email: string, password: string) {
   let data: LoginDataType | null = null;

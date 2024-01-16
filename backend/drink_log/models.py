@@ -20,6 +20,19 @@ class DrinkLog(models.Model):
             return f"{oz:.0f} oz"
         return f"{oz:.1f} oz"
 
+    @property
+    def us_standard_drinks(self):
+        ETHANOL_WEIGHT = 0.79  # g/mL
+        ethanol_grams_per_standard = 14  # g
+        ethanol_volume_per_standard_drink = (
+            ethanol_grams_per_standard / ETHANOL_WEIGHT
+        )  # mL
+        ethanol_volume_per_beverage = float(self.volume) * (self.beverage.abv / 100)
+        standard_drinks = (
+            ethanol_volume_per_beverage / ethanol_volume_per_standard_drink
+        )
+        return f"{standard_drinks:.2f} units"
+
     class Meta:
         verbose_name_plural = "Drink log"
 

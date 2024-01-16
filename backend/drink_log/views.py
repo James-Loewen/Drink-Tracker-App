@@ -14,20 +14,15 @@ class DrinkLogList(ListCreateAPIView):
     serializer_class = DrinkLogSerializer
     queryset = DrinkLog.objects.all().order_by("-timestamp")
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = None
 
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
         queryset = queryset.filter(user=self.request.user)
-        start_date = self.request.GET.get("start_date")
-        end_date = self.request.GET.get("end_date")
+        start_date = self.request.GET.get("startDate")
+        end_date = self.request.GET.get("endDate")
+        print("What the freakin ass heck", start_date, end_date)
         if start_date and end_date:
-            try:
-                start_date = datetime.strptime(start_date, DATE_FORMAT)
-                end_date = datetime.strptime(end_date, DATE_FORMAT).replace(
-                    hour=23, minute=23, second=59
-                )
-            except Exception as e:
-                raise e
             queryset = queryset.filter(timestamp__range=(start_date, end_date))
         return queryset
 

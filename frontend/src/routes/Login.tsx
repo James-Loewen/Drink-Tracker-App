@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { clsx } from "clsx";
-import { login } from "../services/auth";
+import { login } from "../api/auth";
 import Button from "../components/Button";
 
 function Login() {

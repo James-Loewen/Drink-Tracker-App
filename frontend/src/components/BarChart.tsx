@@ -29,7 +29,11 @@ function BarChart({ data }: BarChartProps) {
           margin={{ top: 50, right: 20, bottom: 80, left: 25 }}
           padding={0.3}
           innerPadding={width > 600 ? 8 : 3}
-          valueScale={{ type: "linear" }}
+          valueScale={{
+            type: "linear",
+            min: 0,
+            max: tickValues[tickValues.length - 1],
+          }}
           indexScale={{ type: "band", round: true }}
           colors={["rgba(33, 106, 111, .85)", "rgba(218, 165, 32, .85)"]}
           borderRadius={3}
@@ -57,7 +61,6 @@ function BarChart({ data }: BarChartProps) {
             },
           ]}
           groupMode="grouped"
-          minValue={0}
           axisTop={null}
           axisRight={null}
           axisBottom={{

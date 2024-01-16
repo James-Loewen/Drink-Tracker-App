@@ -8,7 +8,7 @@ function getHighest(data: any) {
 }
 
 function generateAxisTicks(data: any) {
-  const highest = getHighest(data);
+  const highest = Math.max(Math.ceil(getHighest(data)), 4);
   const ticks = [];
   for (let i = 0; i <= highest; i++) {
     ticks.push(i);

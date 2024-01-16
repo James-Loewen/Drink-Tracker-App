@@ -22,6 +22,7 @@ function generateWeeklyData(): BarDatum[] {
     };
   });
 
+  console.log("dataset", dataset);
   return dataset;
 }
 

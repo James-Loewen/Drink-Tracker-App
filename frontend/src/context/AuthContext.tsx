@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { login, logout, type LoginResponseType } from "../services/auth";
+import { login, logout, type LoginResponseType } from "../api/auth";
 
 type UserDetails = {
   full_name: string;
