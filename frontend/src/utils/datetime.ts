@@ -6,11 +6,22 @@ import {
   endOfDay,
   startOfWeek,
   endOfWeek,
+  subWeeks,
   startOfMonth,
   endOfMonth,
 } from "date-fns";
 
 const DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+export const WEEKDAYS = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 type TimeOfDay = "start" | "end" | null;
 
@@ -31,7 +42,14 @@ export function toCustomIsoFormat(
   return format(replacementFn(date), DATETIME_FORMAT);
 }
 
-export function getWeekStartAndEndDate(date = new Date()) {
+export function getWeekStartAndEndDate(
+  weekOffset: number = 0,
+  date = new Date()
+) {
+  if (weekOffset > 0) {
+    date = subWeeks(date, weekOffset);
+  }
+
   return {
     startDate: startOfWeek(date),
     endDate: endOfWeek(date),

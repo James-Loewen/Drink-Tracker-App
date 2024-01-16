@@ -1,6 +1,6 @@
-import { type FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 
-import { useState } from "react";
+import { queryBeverages } from "../api/search";
 
 type ResultsArray = any[] | null;
 
@@ -10,12 +10,13 @@ function Search() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const url = new URL("http://localhost:8000/beverages/");
-    url.searchParams.set("q", query);
-    console.log(url);
-    const res = await fetch(url, { credentials: "include" });
-    const data = await res.json();
-    console.log(data);
+    // const url = new URL("http://localhost:8000/beverages/");
+    // url.searchParams.set("q", query);
+    // console.log(url);
+    // const res = await fetch(url, { credentials: "include" });
+    // const data = await res.json();
+    // console.log(data);
+    const data = await queryBeverages(query);
 
     setResults(data.results);
   }

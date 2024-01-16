@@ -14,11 +14,6 @@ type ErrorType = {
   detail: string;
 };
 
-interface FetchParams {
-  input: RequestInfo | URL;
-  init?: RequestInit | undefined;
-}
-
 export type LoginResponseType = {
   error: ErrorType | null;
   data: LoginDataType | null;

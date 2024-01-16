@@ -52,19 +52,22 @@ export function AuthProvider({ children }: AuthProps) {
     fetchUserDetails();
   }, []);
 
-  if (isLoading) {
+  // if (isLoading) {
+  //   return (
+  //     // <div className="w-full h-screen flex justify-center items-center">
+  //     //   <h1 className="font-bold text-lg">Loading...</h1>
+  //     // </div>
+  //     <></>
+  //   );
+  // }
+
+  if (!isLoading) {
     return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <h1 className="font-bold text-lg">Loading...</h1>
-      </div>
+      <AuthContext.Provider value={{ user, setUser, login, logout }}>
+        {children}
+      </AuthContext.Provider>
     );
   }
-
-  return (
-    <AuthContext.Provider value={{ user, setUser, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
 }
 
 export function useAuth() {
