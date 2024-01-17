@@ -13,10 +13,8 @@ import Search from "./routes/Search";
 import Login from "./routes/Login";
 import WeekView from "./routes/WeekView";
 import "./index.css";
-import { getDatesInTimeframe, getWeekStartAndEndDate } from "./utils/datetime";
+import { getWeekStartAndEndDate } from "./utils/datetime";
 import { fetchDrinkLog } from "./api/drinkLog";
-import { isSameDay } from "date-fns";
-import calculateStandardDrinks from "./utils/calculateStandardDrinks";
 import { formatBarChartDataset } from "./utils/formatDataset";
 import { ModalProvider } from "./context/ModalContext";
 

@@ -1,4 +1,4 @@
-function getCookie(name: string) {
+export function getCookie(name: string) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -13,4 +13,6 @@ function getCookie(name: string) {
   return cookieValue;
 }
 
-export default getCookie;
+export function getCsrfCookie() {
+  return getCookie("csrftoken");
+}

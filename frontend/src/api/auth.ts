@@ -1,4 +1,4 @@
-import getCookie from "../utils/getCookie";
+import { getCsrfCookie } from "../utils/cookies";
 
 export const API_PATH = import.meta.env.PROD
   ? ""
@@ -43,7 +43,7 @@ export async function login(username_or_email: string, password: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken")!,
+      "X-CSRFToken": getCsrfCookie()!,
     },
     body: JSON.stringify({ username_or_email, password }),
   });
@@ -69,7 +69,7 @@ export async function logout() {
     credentials: "include",
     method: "POST",
     headers: {
-      "X-CSRFToken": getCookie("csrftoken")!,
+      "X-CSRFToken": getCsrfCookie()!,
     },
   });
   if (res.status === 200) {

@@ -7,11 +7,11 @@ import {
   useContext,
 } from "react";
 
-export type ModalName = "sampleModal";
+export type Modal = ReactNode;
 
 export interface ModalContextType {
-  modal: ModalName | null;
-  setModal: Dispatch<SetStateAction<ModalName | null>>;
+  modal: Modal | null;
+  setModal: Dispatch<SetStateAction<Modal | null>>;
 }
 
 const ModalContext = createContext<ModalContextType>(null!);
@@ -21,7 +21,7 @@ interface ModalProviderProps {
 }
 
 export function ModalProvider({ children }: ModalProviderProps) {
-  const [modal, setModal] = useState<ModalName | null>(null);
+  const [modal, setModal] = useState<Modal | null>(null);
 
   return (
     <ModalContext.Provider value={{ modal, setModal }}>

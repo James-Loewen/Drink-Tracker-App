@@ -1,25 +1,26 @@
-// import type { BarDatum } from "@nivo/bar";
-import { useState } from "react";
-import Button from "../components/Button";
-import BarChart from "../components/BarChart";
-import generateWeeklyData from "../data/generateWeeklyData";
-
 import { useLoaderData } from "react-router-dom";
+import type { BarDatum } from "@nivo/bar";
+import BarChart from "../components/BarChart";
+import { type DrinkLog } from "../api/drinkLog";
+
+interface WeekViewLoaderData {
+  drinkLog: DrinkLog[];
+  startDate: Date;
+  endDate: Date;
+  dataset: BarDatum[];
+}
 
 function WeekView() {
-  // const [dataset, setDataset] = useState(generateWeeklyData());
-  const data: any = useLoaderData();
-  console.log("Loader data:", data);
+  const { dataset, startDate, endDate } = useLoaderData() as WeekViewLoaderData;
 
   return (
     <>
-      <BarChart data={data.dataset} />
-      <Button
-        // onClick={() => setDataset(generateWeeklyData())}
-        variant="primary"
-      >
-        Randomize
-      </Button>
+      <div className="p-4">
+        <h1 className="font-bold font-mono text-center text-xl">
+          {startDate.toLocaleDateString()} – {endDate.toLocaleDateString()}
+        </h1>
+      </div>
+      <BarChart data={dataset} />
     </>
   );
 }

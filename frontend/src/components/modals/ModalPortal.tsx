@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import ReactPortal from "./ReactPortal";
+import ReactPortal from "../ReactPortal";
 import clsx from "clsx";
 
 interface ModalPortalProps {
@@ -12,7 +12,7 @@ function ModalPortal({ children }: ModalPortalProps) {
     "fixed top-0 left-0",
     "w-screen h-screen",
     "flex justify-center items-center",
-    "bg-neutral-400/40"
+    "bg-neutral-800/50"
   );
 
   return (

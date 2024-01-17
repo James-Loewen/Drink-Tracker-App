@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 
-import { useModal } from "../context/ModalContext";
+import { useModal } from "../../context/ModalContext";
 
-import useFocusTrap from "../hooks/useFocusTrap";
+import Modal from "./BaseModal";
+import useFocusTrap from "../../hooks/useFocusTrap";
 import styles from "./SampleModal.module.css";
 // import xIcon from "../assets/x.svg";
 
@@ -56,7 +57,7 @@ const useFilteredBeverages = (text: string) => {
 };
 
 function SampleModal() {
-  const { modal, setModal } = useModal();
+  const { setModal } = useModal();
   const [searchText, setSearchText] = useState("");
   const ref = useRef(null);
 
@@ -67,10 +68,8 @@ function SampleModal() {
   useFocusTrap(ref, handleClose);
   const { filteredNames } = useFilteredBeverages(searchText);
 
-  if (modal === null) return null;
-
   return (
-    <div ref={ref} className={styles.modal}>
+    <Modal>
       <button className={styles.xBtn} onClick={handleClose}>
         {/* <img src={xIcon} alt="X icon" width={24} height={24} /> */}X
       </button>
@@ -96,7 +95,7 @@ function SampleModal() {
       <button className={styles.submitBtn} onClick={handleClose}>
         Go!
       </button>
-    </div>
+    </Modal>
   );
 }
 

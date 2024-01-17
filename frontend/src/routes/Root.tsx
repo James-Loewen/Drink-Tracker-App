@@ -1,8 +1,10 @@
 import { Outlet, Link } from "react-router-dom";
 import Header from "../components/Header";
-import ModalManager from "../components/ModalManager";
+import ModalManager from "../components/modals/ModalManager";
 import Button from "../components/Button";
 import { useModal } from "../context/ModalContext";
+import SampleModal from "../components/modals/SampleModal";
+import BeverageSearchModal from "../components/modals/SearchBeverageModal";
 
 function Root() {
   const { setModal } = useModal();
@@ -16,7 +18,7 @@ function Root() {
             <Link to="/graph/year">Year</Link>
           </li>
           <li>
-            <Link to="/graph/month">Month</Link>
+            <Link to="/graph/week/?w=1">Month</Link>
           </li>
           <li>
             <Link to="/graph/week">Week</Link>
@@ -24,7 +26,10 @@ function Root() {
         </ul>
       </nav>
       <Outlet />
-      <Button onClick={() => setModal("sampleModal")}>Uh... modal</Button>
+      <Button onClick={() => setModal(<SampleModal />)}>Sample Modal</Button>
+      <Button onClick={() => setModal(<BeverageSearchModal />)}>
+        Beverage Search Modal
+      </Button>
       <ModalManager />
     </>
   );

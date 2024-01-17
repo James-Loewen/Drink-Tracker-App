@@ -6,7 +6,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary" | "danger";
 }
 
-function Button({ children, variant = "primary", ...props }: ButtonProps) {
+function Button({
+  children,
+  variant = "primary",
+  className,
+  ...props
+}: ButtonProps) {
   const primary = clsx(
     "bg-blue-600 text-white text-sm font-bold",
     "hover:bg-blue-800",
@@ -28,13 +33,16 @@ function Button({ children, variant = "primary", ...props }: ButtonProps) {
     "active:ring-2 ring-offset-1 ring-blue-400"
   );
 
-  const classes = clsx({
-    "px-4 py-2 rounded-lg transition": true, // default, universal styles
-    [primary]: variant === "primary",
-    [secondary]: variant === "secondary",
-    [tertiary]: variant === "tertiary",
-    [danger]: variant === "danger",
-  });
+  const classes = clsx(
+    {
+      "px-4 py-2 rounded-lg transition": true, // default, universal styles
+      [primary]: variant === "primary",
+      [secondary]: variant === "secondary",
+      [tertiary]: variant === "tertiary",
+      [danger]: variant === "danger",
+    },
+    className
+  );
 
   return (
     <button className={classes} {...props}>

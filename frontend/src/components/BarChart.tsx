@@ -36,7 +36,7 @@ function BarChart({ data }: BarChartProps) {
           }}
           indexScale={{ type: "band", round: true }}
           colors={["rgba(33, 106, 111, .85)", "rgba(218, 165, 32, .85)"]}
-          borderRadius={3}
+          borderRadius={2}
           // borderColor={{
           //   from: "color",
           //   modifiers: [["darker", 1.6]],
