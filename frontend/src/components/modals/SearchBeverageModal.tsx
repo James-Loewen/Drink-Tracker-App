@@ -26,7 +26,7 @@ function SearchBeverageResult({ beverage }: SearchBeverageResultProps) {
 }
 
 interface SearchBeverageModalProps {
-  searchText: string;
+  searchText?: string;
 }
 
 function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {

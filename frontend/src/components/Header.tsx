@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { type MouseEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 import { useAuth } from "../context/AuthContext";
-import Button from "./Button";
 import MenuButton from "./MenuButton";
-import clsx from "clsx";
+import styles from "./Header.module.css";
 
 function Header() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-
   const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleNavigate(e: MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    const anchor = e.target as HTMLAnchorElement;
+    const { pathname, search } = new URL(anchor.href);
+    setMenuIsOpen(false);
+    navigate(pathname + search);
+  }
 
   return (
     <header className="h-12 relative border border-[coral]">
@@ -20,17 +29,21 @@ function Header() {
         />
         <ul
           className={clsx({
-            "h-10 gap-4 justify-center items-center": true,
+            // "h-10 gap-4 justify-center items-center": true,
             hidden: !menuIsOpen,
             flex: menuIsOpen,
+            [styles.nav]: menuIsOpen,
           })}
         >
-          <li>Week</li>
-          <li>Month</li>
           <li>
-            <Button variant="secondary" onClick={logout}>
+            <a href="/graph/week" onClick={handleNavigate}>
+              Settings
+            </a>
+          </li>
+          <li>
+            <button className="" onClick={logout}>
               Sign Out
-            </Button>
+            </button>
           </li>
         </ul>
       </nav>

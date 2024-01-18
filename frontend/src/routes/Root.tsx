@@ -4,7 +4,7 @@ import ModalManager from "../components/modals/ModalManager";
 import Button from "../components/Button";
 import { useModal } from "../context/ModalContext";
 import SampleModal from "../components/modals/SampleModal";
-import BeverageSearchModal from "../components/modals/SearchBeverageModal";
+import SearchBeverageModal from "../components/modals/SearchBeverageModal";
 
 function Root() {
   const { setModal } = useModal();
@@ -27,7 +27,7 @@ function Root() {
       </nav>
       <Outlet />
       <Button onClick={() => setModal(<SampleModal />)}>Sample Modal</Button>
-      <Button onClick={() => setModal(<BeverageSearchModal />)}>
+      <Button onClick={() => setModal(<SearchBeverageModal />)}>
         Beverage Search Modal
       </Button>
       <ModalManager />
