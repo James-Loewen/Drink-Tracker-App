@@ -13,10 +13,14 @@ import Search from "./routes/Search";
 import Login from "./routes/Login";
 import WeekView from "./routes/WeekView";
 import "./index.css";
-import { getWeekStartAndEndDate } from "./utils/datetime";
+import {
+  getWeekStartAndEndDate,
+  getMonthStartAndEndDate,
+} from "./utils/datetime";
 import { fetchDrinkLog } from "./api/drinkLog";
 import { formatBarChartDataset } from "./utils/formatDataset";
 import { ModalProvider } from "./context/ModalContext";
+import LogListView from "./routes/LogListView";
 
 const router = createBrowserRouter([
   {
@@ -41,17 +45,32 @@ const router = createBrowserRouter([
         loader: async ({ request }) => {
           const url = new URL(request.url);
           const weekOffset = parseInt(url.searchParams.get("w") ?? "0");
-          // const startTime = new Date().getTime();
           const { startDate, endDate } = getWeekStartAndEndDate(weekOffset);
           const drinkLog = await fetchDrinkLog(startDate, endDate);
           const dataset = formatBarChartDataset(drinkLog, startDate, endDate);
-          // const endTime = new Date().getTime();
-          // console.log(
-          //   "time ellapsed:",
-          //   (endTime - startTime) / 1000,
-          //   "seconds"
-          // );
           return { drinkLog, startDate, endDate, dataset };
+        },
+      },
+    ],
+  },
+  {
+    path: "drink-log/",
+    element: (
+      <ProtectedComponent>
+        <Root />
+      </ProtectedComponent>
+    ),
+    children: [
+      {
+        path: "",
+        element: <LogListView />,
+        loader: async ({ request }) => {
+          const url = new URL(request.url);
+          const monthOffset = parseInt(url.searchParams.get("m") ?? "0");
+          const { startDate, endDate } = getMonthStartAndEndDate(monthOffset);
+          const drinkLog = await fetchDrinkLog(startDate, endDate);
+          console.log(drinkLog);
+          return { drinkLog, startDate, endDate };
         },
       },
     ],

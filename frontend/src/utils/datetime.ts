@@ -9,6 +9,7 @@ import {
   subWeeks,
   startOfMonth,
   endOfMonth,
+  subMonths,
 } from "date-fns";
 
 const DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -56,6 +57,20 @@ export function getWeekStartAndEndDate(
   };
 }
 
+export function getMonthStartAndEndDate(
+  monthOffset: number = 0,
+  date = new Date()
+) {
+  if (monthOffset > 0) {
+    date = subMonths(date, monthOffset);
+  }
+
+  return {
+    startDate: startOfMonth(date),
+    endDate: endOfMonth(date),
+  };
+}
+
 export function getWeekStartAndEndDateStrings(day = new Date()) {
   return {
     startDate: toCustomIsoFormat(startOfWeek(day)),
@@ -67,13 +82,6 @@ export function getMonthStartAndEndDateStrings(day = new Date()) {
   return {
     startDate: toCustomIsoFormat(startOfMonth(day)),
     endDate: toCustomIsoFormat(endOfMonth(day)),
-  };
-}
-
-export function getMonthStartAndEndDate(date = new Date()) {
-  return {
-    startDate: startOfMonth(date),
-    endDate: endOfMonth(date),
   };
 }
 
