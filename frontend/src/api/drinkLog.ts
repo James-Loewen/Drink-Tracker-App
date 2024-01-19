@@ -15,7 +15,8 @@ export interface DrinkLog {
 export async function fetchDrinkLog(startDate: Date, endDate: Date) {
   const startDateString = toCustomIsoFormat(startDate, "start");
   const endDateString = toCustomIsoFormat(endDate, "end");
-  const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
+  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
+  const drinkLogUrl = new URL("http://localhost:8000/api/drink-log/");
   const searchParams = new URLSearchParams({
     startDate: startDateString,
     endDate: endDateString,
@@ -32,7 +33,8 @@ export async function postDrinkLog(
   volume: number,
   beverageId: number
 ) {
-  const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
+  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
+  const drinkLogUrl = new URL("http://localhost:8000/api/drink-log/");
   const res = await authFetch(drinkLogUrl, {
     credentials: "include",
     method: "POST",

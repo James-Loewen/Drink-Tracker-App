@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.postgres.indexes import GistIndex
 
+from .managers import BeverageManager
+
 User = get_user_model()
 
 
@@ -59,6 +61,9 @@ class Beverage(models.Model):
         on_delete=models.SET_DEFAULT,
         default=get_moderator_admin_pk,
     )
+
+    # Custom Manager
+    objects = BeverageManager()
 
     class Meta:
         unique_together = ["brand", "name"]

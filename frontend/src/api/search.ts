@@ -30,9 +30,15 @@ type PaginatedBrands = PaginatedResults<Brand>;
 
 export async function queryBeverages(query: string) {
   const url = new URL("http://localhost:8000/beverages/");
+  // const url = new URL("http://localhost:8000/api/beverages/");
   url.searchParams.set("q", query);
   const res = await authFetch(url, { credentials: "include" });
   const data: PaginatedBeverages = await res.json();
+  // @ts-ignore
+  if (data?.items) {
+    // @ts-ignore
+    data.results = data.items;
+  }
   return data;
 }
 

@@ -33,7 +33,8 @@ export function AuthProvider({ children }: AuthProps) {
 
   useEffect(() => {
     async function fetchUserDetails() {
-      const res = await fetch("http://localhost:8000/auth/user/", {
+      // const res = await fetch("http://localhost:8000/auth/user/", {
+      const res = await fetch("http://localhost:8000/api/auth/user", {
         method: "GET",
         credentials: "include",
       });
@@ -44,7 +45,7 @@ export function AuthProvider({ children }: AuthProps) {
       }
 
       const data = await res.json();
-      // console.log(data);
+      console.log(data);
       setIsLoading(false);
       setUser(data);
     }
