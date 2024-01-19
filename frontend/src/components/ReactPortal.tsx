@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 
 function createWrapperAndAppendToBody(wrapperId: string, classes: string = "") {
   const wrapperElement = document.createElement("div");
-  console.log(classes);
   wrapperElement.setAttribute("id", wrapperId);
   wrapperElement.setAttribute("class", classes);
   document.body.appendChild(wrapperElement);

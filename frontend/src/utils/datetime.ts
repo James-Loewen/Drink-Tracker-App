@@ -97,6 +97,5 @@ export function getDatesInTimeframe(startDate: Date, endDate: Date) {
     currDate = addDays(currDate, 1);
   }
   dates.push(currDate);
-  console.log(dates);
   return dates;
 }

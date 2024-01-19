@@ -21,6 +21,7 @@ class DrinkLogOut(ModelSchema):
     class Meta:
         model = DrinkLog
         fields = [
+            "id",
             "timestamp",
             "volume",
             "beverage",

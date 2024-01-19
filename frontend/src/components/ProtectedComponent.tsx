@@ -8,7 +8,6 @@ type ProtectedRouteProps = {
 
 function ProtectedComponent({ children }: ProtectedRouteProps) {
   const { user } = useAuth();
-  console.log("Protected Route rendering");
 
   if (!user) {
     return <Navigate to="/login" />;

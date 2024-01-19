@@ -7,6 +7,7 @@ import { getCsrfCookie } from "../utils/cookies";
 // type Timeframe = "week" | "month" | "year";
 
 export interface DrinkLog {
+  id: number;
   timestamp: string;
   volume: string;
   beverage: Beverage;
@@ -24,7 +25,6 @@ export async function fetchDrinkLog(startDate: Date, endDate: Date) {
   drinkLogUrl.search = searchParams.toString();
   const res = await authFetch(drinkLogUrl, { credentials: "include" });
   const data: DrinkLog[] = await res.json();
-  // console.log(data);
   return data;
 }
 
@@ -44,7 +44,5 @@ export async function postDrinkLog(
     },
     body: JSON.stringify({ timestamp, volume, beverage_id: beverageId }),
   });
-  console.table(res);
   const data = await res.json();
-  console.table(data);
 }

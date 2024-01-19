@@ -19,6 +19,7 @@ class DrinkLogSerializer(serializers.ModelSerializer):
     timestamp = NaiveDateTimeField(default_timezone=None)
 
     # Read Only
+    id = serializers.IntegerField(read_only=True)
     beverage = BeverageSerializer(read_only=True)
 
     # Write Only
@@ -29,6 +30,7 @@ class DrinkLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = DrinkLog
         fields = [
+            "id",
             "timestamp",
             "beverage",
             "volume",

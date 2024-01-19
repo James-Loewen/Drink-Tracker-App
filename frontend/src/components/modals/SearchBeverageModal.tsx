@@ -42,8 +42,6 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const q = query.trim();
-    console.log("SUBMIT, BABY");
-    console.log("Query", q);
 
     if (q === "") {
       return;

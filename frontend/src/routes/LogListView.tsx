@@ -34,20 +34,21 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
           {toTimeString(new Date(log.timestamp))}
         </td>
         <td className={tdClass}>
-          <button className="p-2">
+          <button className="p-2" onClick={() => alert(`Edit log #${log.id}`)}>
             <EditIcon />
           </button>
         </td>
         <td className={tdClass}>
-          <button className="p-2">
+          <button
+            className="p-2"
+            onClick={() => alert(`Delete log #${log.id}`)}
+          >
             <TrashIcon />
           </button>
         </td>
       </tr>
     );
   });
-
-  console.log(dailyLog);
 
   return (
     <>
