@@ -12,8 +12,6 @@ import {
   subMonths,
 } from "date-fns";
 
-const DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
 export const WEEKDAYS = [
   "Sunday",
   "Monday",
@@ -23,6 +21,12 @@ export const WEEKDAYS = [
   "Friday",
   "Saturday",
 ];
+
+export function toTimeString(date: Date) {
+  return format(date, "h:mmaaa");
+}
+
+const DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 type TimeOfDay = "start" | "end" | null;
 

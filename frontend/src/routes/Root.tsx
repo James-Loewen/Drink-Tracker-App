@@ -25,9 +25,6 @@ function Root() {
         </ul>
       </nav>
       <Outlet />
-      <Button onClick={() => setModal(<SearchBeverageModal />)}>
-        Beverage Search Modal
-      </Button>
       <ModalManager />
     </>
   );

@@ -2,6 +2,9 @@ import { useLoaderData } from "react-router-dom";
 import type { BarDatum } from "@nivo/bar";
 import BarChart from "../components/BarChart";
 import { type DrinkLog } from "../api/drinkLog";
+import Button from "../components/Button";
+import SearchBeverageModal from "../components/modals/SearchBeverageModal";
+import { useModal } from "../context/ModalContext";
 
 interface WeekViewLoaderData {
   drinkLog: DrinkLog[];
@@ -12,6 +15,7 @@ interface WeekViewLoaderData {
 
 function WeekView() {
   const { dataset, startDate, endDate } = useLoaderData() as WeekViewLoaderData;
+  const { setModal } = useModal();
 
   return (
     <>
@@ -21,6 +25,9 @@ function WeekView() {
         </h1>
       </div>
       <BarChart data={dataset} />
+      <Button onClick={() => setModal(<SearchBeverageModal />)}>
+        Beverage Search Modal
+      </Button>
     </>
   );
 }

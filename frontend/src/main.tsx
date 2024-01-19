@@ -69,7 +69,6 @@ const router = createBrowserRouter([
           const monthOffset = parseInt(url.searchParams.get("m") ?? "0");
           const { startDate, endDate } = getMonthStartAndEndDate(monthOffset);
           const drinkLog = await fetchDrinkLog(startDate, endDate);
-          console.log(drinkLog);
           return { drinkLog, startDate, endDate };
         },
       },

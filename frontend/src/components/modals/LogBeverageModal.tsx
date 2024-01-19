@@ -28,7 +28,6 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
     const timestamp = `${date} ${time}`;
     const data = await postDrinkLog(timestamp, mL, beverage.id);
     const path = window.location.pathname;
-    // window.location.assign(path);
     navigate(path);
     setModal(null);
   }
@@ -39,33 +38,60 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
       <p>Brand: {beverage.brand.name}</p>
       <p>Beverage: {beverage.name}</p>
       <p>Abv: {beverage.abv}%</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="number"
-          value={volume}
-          onChange={(e) => setVolume(+e.target.value)}
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-        <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          required
-        />
-        <Button type="submit">+ Log</Button>
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+        <div className="flex gap-2 items-center">
+          <label className="w-20" htmlFor="volume">
+            Volume
+          </label>
+          <input
+            name="volume"
+            id="volume"
+            type="number"
+            value={volume}
+            step={0.1}
+            onChange={(e) => setVolume(+e.target.value)}
+          />
+        </div>
+        <div className="flex gap-2 items-center">
+          <label className="w-20" htmlFor="date">
+            Date
+          </label>
+          <input
+            name="date"
+            id="date"
+            type="date"
+            value={date}
+            max={currentDate}
+            onChange={(e) => setDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="flex gap-2 items-center">
+          <label className="w-20" htmlFor="time">
+            Time
+          </label>
+          <input
+            name="time"
+            id="time"
+            type="time"
+            value={time}
+            max={currentTime}
+            onChange={(e) => setTime(e.target.value)}
+            required
+          />
+        </div>
+        <div className="py-2 flex gap-2 justify-end">
+          <Button
+            variant="secondary"
+            onClick={() =>
+              setModal(<BeverageSearchModal searchText={beverage.name} />)
+            }
+          >
+            Back
+          </Button>
+          <Button type="submit">+ Log</Button>
+        </div>
       </form>
-      <Button
-        onClick={() =>
-          setModal(<BeverageSearchModal searchText={beverage.name} />)
-        }
-      >
-        Back
-      </Button>
     </Modal>
   );
 }
