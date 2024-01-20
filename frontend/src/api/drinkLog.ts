@@ -45,4 +45,20 @@ export async function postDrinkLog(
     body: JSON.stringify({ timestamp, volume, beverage_id: beverageId }),
   });
   const data = await res.json();
+  return data;
+}
+
+export async function deleteDrinkLog(id: number) {
+  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
+  const drinkLogUrl = new URL(`http://localhost:8000/api/drink-log/${id}`);
+  const res = await fetch(drinkLogUrl, {
+    credentials: "include",
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCsrfCookie()!,
+    },
+    body: JSON.stringify({ id }),
+  });
+  return res;
 }

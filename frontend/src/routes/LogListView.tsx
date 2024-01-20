@@ -6,6 +6,8 @@ import { type DrinkLog } from "../api/drinkLog";
 import { millilitersToOunces } from "../utils/convertVolume";
 import EditIcon from "../components/svg/EditIcon";
 import TrashIcon from "../components/svg/TrashIcon";
+import { useModal } from "../context/ModalContext";
+import DeleteLogModal from "../components/modals/DeleteLogModal";
 
 interface LogListDayTableProps {
   dailyLog: DrinkLog[];
@@ -13,6 +15,8 @@ interface LogListDayTableProps {
 }
 
 function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
+  const { setModal } = useModal();
+
   const thClass = clsx(
     "py-2 border-slate-600/20 bg-blue-900/15 font-display text-sm sm:text-base"
   );
@@ -41,7 +45,7 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
         <td className={tdClass}>
           <button
             className="p-2"
-            onClick={() => alert(`Delete log #${log.id}`)}
+            onClick={() => setModal(<DeleteLogModal drinkLog={log} />)}
           >
             <TrashIcon />
           </button>

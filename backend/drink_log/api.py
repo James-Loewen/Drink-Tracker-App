@@ -1,5 +1,7 @@
 from typing import List
 
+from django.shortcuts import get_object_or_404
+
 from ninja import Router, Schema, ModelSchema
 
 from beverages.api import BeverageOut
@@ -46,32 +48,17 @@ def post_drink_log(request, data: DrinkLogIn):
     return 201, log
 
 
-# DATE_FORMAT = "%Y-%m-%d"
+class DeleteMessage(Schema):
+    success: bool
+    message: str
 
 
-# class DrinkLogList(ListCreateAPIView):
-#     serializer_class = DrinkLogSerializer
-#     queryset = DrinkLog.objects.all().order_by("-timestamp")
-#     permission_classes = [permissions.IsAuthenticated]
-#     pagination_class = None
+@router.delete("{drink_log_id}", response={204: DeleteMessage, 403: DeleteMessage})
+def delete_drink_log(request, drink_log_id: int):
+    log = get_object_or_404(DrinkLog, id=drink_log_id)
 
-#     def filter_queryset(self, queryset):
-#         queryset = super().filter_queryset(queryset)
-#         queryset = queryset.filter(user=self.request.user)
-#         start_date = self.request.GET.get("startDate")
-#         end_date = self.request.GET.get("endDate")
-#         if start_date and end_date:
-#             queryset = queryset.filter(timestamp__range=(start_date, end_date))
-#         return queryset
+    if log.user == request.user:
+        log.delete()
+        return 204, {"success": True, "message": "Successfully deleted."}
 
-#     def create(self, request, *args, **kwargs):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_create(serializer, user=request.user)
-#         headers = self.get_success_headers(serializer.data)
-#         return Response(
-#             serializer.data, status=status.HTTP_201_CREATED, headers=headers
-#         )
-
-#     def perform_create(self, serializer, **kwargs):
-#         serializer.save(**kwargs)
+    return 403, {"success": False, "message": "You absolutely may not do that."}
