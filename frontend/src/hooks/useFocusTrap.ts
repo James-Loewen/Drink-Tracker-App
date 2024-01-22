@@ -3,12 +3,10 @@ import { type MutableRefObject, useEffect } from "react";
 const focusableElemString =
   "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
 
-const useFocusTrap = (
+function useFocusTrap(
   ref: MutableRefObject<HTMLElement | null>,
   closeFn: () => void
-) => {
-  const lastActiveElement = document.activeElement as HTMLElement;
-
+) {
   useEffect(() => {
     // ref.current *should* always be set by now,
     // but to make TypeScript happy, we'll check.
@@ -20,12 +18,9 @@ const useFocusTrap = (
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    // If this evaluates to false it (most likely) means that
-    // a descendent of the Focus Trap node has an autofocus
-    // attribute, which should be respected.
-    if (document.activeElement === lastActiveElement) {
-      firstElement.focus();
-    }
+    // The wrapper <div> has a tabIndex of 0 so that it is focusable
+    // this ensures that focus is directed to the modal at open
+    node.focus();
 
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === "Tab") {
@@ -60,11 +55,8 @@ const useFocusTrap = (
       document.removeEventListener("keydown", handleKeydown);
       document.removeEventListener("mousedown", handleMouseEvents, options);
       document.removeEventListener("click", handleMouseEvents, options);
-
-      // return focus to lastActiveElement
-      lastActiveElement.focus();
     };
   }, [ref]);
-};
+}
 
 export default useFocusTrap;

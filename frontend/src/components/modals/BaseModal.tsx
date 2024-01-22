@@ -8,12 +8,12 @@ interface BaseModalProps {
 }
 
 function BaseModal({ children }: BaseModalProps) {
-  const { setModal } = useModal();
+  const { closeModal } = useModal();
   const ref = useRef(null);
-  useFocusTrap(ref, () => setModal(null));
+  useFocusTrap(ref, closeModal);
 
   return (
-    <div ref={ref} className={styles.modal}>
+    <div ref={ref} className={styles.modal} tabIndex={0}>
       {children}
     </div>
   );

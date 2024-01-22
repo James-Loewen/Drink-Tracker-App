@@ -56,7 +56,7 @@ function RecentBeverageCards({ drinkLog }: RecentBeverageCardsProps) {
 function WeekView() {
   const { drinkLog, dataset, startDate, endDate } =
     useLoaderData() as WeekViewLoaderData;
-  const { setModal } = useModal();
+  const { openModal } = useModal();
   const url = new URL(window.location.href);
   const weekOffset = +(url.searchParams.get("w") ?? 0);
   const navigate = useNavigate();
@@ -102,9 +102,13 @@ function WeekView() {
             stroke-width="3"
             stroke-linecap="round"
             stroke-linejoin="round"
+            aria-labelledby="prev-btn"
           >
             <polyline points="14 18 8 12 14 6"></polyline>
           </svg>
+          <span id="prev-btn" className="sr-only">
+            Previous
+          </span>
         </button>
         <h1 className="font-bold font-display text-center text-xl">
           {startDate.toLocaleDateString()} – {endDate.toLocaleDateString()}
@@ -120,13 +124,17 @@ function WeekView() {
             stroke-width="3"
             stroke-linecap="round"
             stroke-linejoin="round"
+            aria-labelledby="next-btn"
           >
             <polyline points="10 18 16 12 10 6"></polyline>
           </svg>
+          <span id="next-btn" className="sr-only text-black">
+            Next
+          </span>
         </button>
       </div>
       <BarChart data={dataset} />
-      <Button onClick={() => setModal(<SearchBeverageModal />)}>
+      <Button onClick={() => openModal(<SearchBeverageModal />)}>
         Beverage Search Modal
       </Button>
       <RecentBeverageCards drinkLog={drinkLog} />

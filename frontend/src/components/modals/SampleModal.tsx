@@ -57,12 +57,12 @@ const useFilteredBeverages = (text: string) => {
 };
 
 function SampleModal() {
-  const { setModal } = useModal();
+  const { closeModal } = useModal();
   const [searchText, setSearchText] = useState("");
   const ref = useRef(null);
 
   function handleClose() {
-    setModal(null);
+    closeModal();
   }
 
   useFocusTrap(ref, handleClose);

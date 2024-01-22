@@ -15,7 +15,7 @@ interface LogListDayTableProps {
 }
 
 function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
-  const { setModal } = useModal();
+  const { openModal } = useModal();
 
   const thClass = clsx(
     "py-2 border-slate-600/20 bg-blue-900/15 font-display text-sm sm:text-base"
@@ -45,7 +45,7 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
         <td className={tdClass}>
           <button
             className="p-2"
-            onClick={() => setModal(<DeleteLogModal drinkLog={log} />)}
+            onClick={() => openModal(<DeleteLogModal drinkLog={log} />)}
           >
             <TrashIcon />
           </button>

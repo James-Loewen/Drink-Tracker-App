@@ -1,13 +1,8 @@
 import { Outlet, Link } from "react-router-dom";
 import Header from "../components/Header";
 import ModalManager from "../components/modals/ModalManager";
-import Button from "../components/Button";
-import { useModal } from "../context/ModalContext";
-import SearchBeverageModal from "../components/modals/SearchBeverageModal";
 
 function Root() {
-  const { setModal } = useModal();
-
   return (
     <>
       <Header />

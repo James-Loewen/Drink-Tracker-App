@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import clsx from "clsx";
 import type { Beverage } from "../api/search";
 import { useModal } from "../context/ModalContext";
@@ -14,7 +15,7 @@ interface BeverageCardButtonProps {
 }
 
 function BeverageCardButton({ beverage }: BeverageCardButtonProps) {
-  const { setModal } = useModal();
+  const { openModal } = useModal();
 
   const buttonClass = clsx(
     "px-3 py-2 w-full",
@@ -29,11 +30,12 @@ function BeverageCardButton({ beverage }: BeverageCardButtonProps) {
     colorMap[beverage.category.category.toLowerCase()]
   }`;
 
+  function handleClick(e: MouseEvent<HTMLButtonElement>) {
+    openModal(<LogBeverageModal beverage={beverage} />);
+  }
+
   return (
-    <button
-      onClick={() => setModal(<LogBeverageModal beverage={beverage} />)}
-      className={buttonClass}
-    >
+    <button onClick={handleClick} className={buttonClass}>
       <span className={coloredText}>{beverage.category.category}</span>
       <span className="justify-self-end">
         {beverage.abv}% <span className={coloredText}>abv</span>

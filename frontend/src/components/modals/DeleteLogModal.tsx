@@ -12,25 +12,17 @@ interface DeleteLogModalProps {
 }
 
 function DeleteLogModal({ drinkLog }: DeleteLogModalProps) {
-  const { setModal } = useModal();
+  const { closeModal } = useModal();
 
   const navigate = useNavigate();
-
-  async function handleDelete(id: number) {
-    await deleteDrinkLog(id);
-    const path = window.location.pathname;
-    console.log(path);
-    navigate(path);
-    setModal(null);
-  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await deleteDrinkLog(drinkLog.id);
-    const path = window.location.pathname;
-    console.log(path);
+    const url = new URL(window.location.href);
+    const path = url.pathname + url.search;
     navigate(path);
-    setModal(null);
+    closeModal();
   }
 
   return (
@@ -43,7 +35,7 @@ function DeleteLogModal({ drinkLog }: DeleteLogModalProps) {
       </p>
       <p>Are you sure you want to delete this log?</p>
       <form onSubmit={handleSubmit} className="flex gap-2 justify-end">
-        <Button variant="secondary" onClick={() => setModal(null)}>
+        <Button variant="secondary" onClick={() => closeModal()}>
           Cancel
         </Button>
         <Button variant="danger" type="submit">

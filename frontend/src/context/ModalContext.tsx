@@ -12,6 +12,10 @@ export type Modal = ReactNode;
 export interface ModalContextType {
   modal: Modal | null;
   setModal: Dispatch<SetStateAction<Modal | null>>;
+  lastActiveElement: any;
+  setLastActiveElement: Dispatch<any>;
+  closeModal: () => void;
+  openModal: (modalComponent: Modal) => void;
 }
 
 const ModalContext = createContext<ModalContextType>(null!);
@@ -22,9 +26,32 @@ interface ModalProviderProps {
 
 export function ModalProvider({ children }: ModalProviderProps) {
   const [modal, setModal] = useState<Modal | null>(null);
+  const [lastActiveElement, setLastActiveElement] = useState<any>("");
+
+  function closeModal() {
+    setModal(null);
+    setLastActiveElement(null);
+    lastActiveElement.focus();
+  }
+
+  function openModal(modalComponent: Modal) {
+    if (modal === null) {
+      setLastActiveElement(document.activeElement);
+    }
+    setModal(modalComponent);
+  }
 
   return (
-    <ModalContext.Provider value={{ modal, setModal }}>
+    <ModalContext.Provider
+      value={{
+        modal,
+        setModal,
+        closeModal,
+        openModal,
+        lastActiveElement,
+        setLastActiveElement,
+      }}
+    >
       {children}
     </ModalContext.Provider>
   );

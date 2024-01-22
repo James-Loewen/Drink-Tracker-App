@@ -18,7 +18,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
   const [volume, setVolume] = useState(12);
   const [date, setDate] = useState(currentDate);
   const [time, setTime] = useState(currentTime.slice(0, 5));
-  const { setModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
     const data = await postDrinkLog(timestamp, mL, beverage.id);
     const path = window.location.pathname;
     navigate(path);
-    setModal(null);
+    closeModal();
   }
 
   return (
@@ -84,7 +84,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
           <Button
             variant="secondary"
             onClick={() =>
-              setModal(<BeverageSearchModal searchText={beverage.name} />)
+              openModal(<BeverageSearchModal searchText={beverage.name} />)
             }
           >
             Back

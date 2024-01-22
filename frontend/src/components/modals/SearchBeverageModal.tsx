@@ -6,39 +6,20 @@ import { queryBeverages } from "../../api/search";
 
 import Button from "../Button";
 import Modal from "./BaseModal";
-import LogBeverageModal from "./LogBeverageModal";
 import BeverageCardButton from "../BeverageCardButton";
-
-interface SearchBeverageResultProps {
-  beverage: Beverage;
-}
-
-function SearchBeverageResult({ beverage }: SearchBeverageResultProps) {
-  const { setModal } = useModal();
-
-  return (
-    <div
-      onClick={() => setModal(<LogBeverageModal beverage={beverage} />)}
-      className="px-2 py-1 border-2 border-blue-400 rounded-md"
-    >
-      <p className="text-gray-700">{beverage.brand.name}</p>
-      <p className="text-gray-800 font-bold">{beverage.name}</p>
-    </div>
-  );
-}
 
 interface SearchBeverageModalProps {
   searchText?: string;
 }
 
 function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
-  const { setModal } = useModal();
+  const { closeModal } = useModal();
   const [query, setQuery] = useState(searchText);
   const [results, setResults] = useState<Beverage[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
 
   function handleClose() {
-    setModal(null);
+    closeModal();
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
