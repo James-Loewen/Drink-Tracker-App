@@ -2,12 +2,14 @@ import { useLoaderData } from "react-router-dom";
 import { getDatesInTimeframe, toTimeString } from "../utils/datetime";
 import { isSameDay } from "date-fns";
 import clsx from "clsx";
-import { type DrinkLog } from "../api/drinkLog";
+import type { DrinkLog } from "../api/drinkLog";
 import { millilitersToOunces } from "../utils/convertVolume";
 import EditIcon from "../components/svg/EditIcon";
 import TrashIcon from "../components/svg/TrashIcon";
 import { useModal } from "../context/ModalContext";
+
 import DeleteLogModal from "../components/modals/DeleteLogModal";
+import EditLogModal from "../components/modals/EditLogModal";
 
 interface LogListDayTableProps {
   dailyLog: DrinkLog[];
@@ -30,15 +32,17 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
     return (
       <tr>
         <td className={tdClass}>{log.beverage.name}</td>
-        {/* <td className={tdClass}>{log.beverage.abv}%</td> */}
         <td className={clsx(tdClass, "whitespace-nowrap")}>
-          {millilitersToOunces(+log.volume)} oz.
+          {millilitersToOunces(log.volume)} oz.
         </td>
         <td className={clsx(tdClass, "whitespace-nowrap")}>
           {toTimeString(new Date(log.timestamp))}
         </td>
         <td className={tdClass}>
-          <button className="p-2" onClick={() => alert(`Edit log #${log.id}`)}>
+          <button
+            className="p-2"
+            onClick={() => openModal(<EditLogModal drinkLog={log} />)}
+          >
             <EditIcon />
           </button>
         </td>

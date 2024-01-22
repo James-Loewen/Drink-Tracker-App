@@ -1,23 +1,27 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { type Beverage } from "../../api/search";
 import { useModal } from "../../context/ModalContext";
 import BeverageSearchModal from "./SearchBeverageModal";
 import Button from "../Button";
 import Modal from "./BaseModal";
 import { toCustomIsoFormat } from "../../utils/datetime";
-import { ouncesToMilliliters } from "../../utils/convertVolume";
-import { postDrinkLog } from "../../api/drinkLog";
+import {
+  ouncesToMilliliters,
+  millilitersToOunces,
+} from "../../utils/convertVolume";
+import { type DrinkLog, updateDrinkLog } from "../../api/drinkLog";
 
-interface LogBeverageModalProps {
-  beverage: Beverage;
+interface EditLogModalProps {
+  drinkLog: DrinkLog;
 }
 
-function LogBeverageModal({ beverage }: LogBeverageModalProps) {
-  const [currentDate, currentTime] = toCustomIsoFormat(new Date()).split(" ");
-  const [volume, setVolume] = useState(12);
-  const [date, setDate] = useState(currentDate);
-  const [time, setTime] = useState(currentTime.slice(0, 5));
+function EditLogModal({ drinkLog }: EditLogModalProps) {
+  const [logDate, logTime] = toCustomIsoFormat(
+    new Date(drinkLog.timestamp)
+  ).split(" ");
+  const [volume, setVolume] = useState(millilitersToOunces(drinkLog.volume));
+  const [date, setDate] = useState(logDate);
+  const [time, setTime] = useState(logTime.slice(0, 5));
   const { openModal, closeModal } = useModal();
 
   const navigate = useNavigate();
@@ -26,7 +30,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
     e.preventDefault();
     const mL = ouncesToMilliliters(volume);
     const timestamp = `${date} ${time}`;
-    await postDrinkLog(timestamp, mL, beverage.id);
+    await updateDrinkLog(drinkLog.id, timestamp, mL, drinkLog.beverage.id);
     const path = window.location.pathname;
     navigate(path);
     closeModal();
@@ -34,10 +38,10 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
 
   return (
     <Modal>
-      <h1 className="font-bold text-xl">Form for logging a beverage</h1>
-      <p>Brand: {beverage.brand.name}</p>
-      <p>Beverage: {beverage.name}</p>
-      <p>Abv: {beverage.abv}%</p>
+      <h1 className="font-display font-bold text-2xl">Edit this log:</h1>
+      <p>Brand: {drinkLog.beverage.brand.name}</p>
+      <p>Beverage: {drinkLog.beverage.name}</p>
+      <p>Abv: {drinkLog.beverage.abv}%</p>
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <div className="flex gap-2 items-center">
           <label className="w-20" htmlFor="volume">
@@ -61,7 +65,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
             id="date"
             type="date"
             value={date}
-            max={currentDate}
+            max={logDate}
             onChange={(e) => setDate(e.target.value)}
             required
           />
@@ -75,25 +79,20 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
             id="time"
             type="time"
             value={time}
-            // max={currentTime}
+            // max={logTime}
             onChange={(e) => setTime(e.target.value)}
             required
           />
         </div>
         <div className="py-2 flex gap-2 justify-end">
-          <Button
-            variant="secondary"
-            onClick={() =>
-              openModal(<BeverageSearchModal searchText={beverage.name} />)
-            }
-          >
-            Back
+          <Button variant="secondary" onClick={() => closeModal()}>
+            Cancel
           </Button>
-          <Button type="submit">+ Log</Button>
+          <Button type="submit">Save</Button>
         </div>
       </form>
     </Modal>
   );
 }
 
-export default LogBeverageModal;
+export default EditLogModal;

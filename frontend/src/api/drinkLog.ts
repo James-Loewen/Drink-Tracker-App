@@ -1,15 +1,12 @@
 import { authFetch } from "./auth";
 import { toCustomIsoFormat } from "../utils/datetime";
-// import calculateStandardDrinks from "../utils/calculateStandardDrinks";
 import type { Beverage } from "./search";
 import { getCsrfCookie } from "../utils/cookies";
-
-// type Timeframe = "week" | "month" | "year";
 
 export interface DrinkLog {
   id: number;
   timestamp: string;
-  volume: string;
+  volume: number;
   beverage: Beverage;
 }
 
@@ -61,4 +58,25 @@ export async function deleteDrinkLog(id: number) {
     body: JSON.stringify({ id }),
   });
   return res;
+}
+
+export async function updateDrinkLog(
+  id: number,
+  timestamp: string,
+  volume: number,
+  beverageId: number
+) {
+  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
+  const drinkLogUrl = new URL(`http://localhost:8000/api/drink-log/${id}`);
+  const res = await authFetch(drinkLogUrl, {
+    credentials: "include",
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCsrfCookie()!,
+    },
+    body: JSON.stringify({ timestamp, volume, beverage_id: beverageId }),
+  });
+  const data = await res.json();
+  return data;
 }

@@ -48,6 +48,22 @@ def post_drink_log(request, data: DrinkLogIn):
     return 201, log
 
 
+@router.put("{drink_log_id}")
+def update_drink_log(request, drink_log_id: int, data: DrinkLogIn):
+    log = get_object_or_404(DrinkLog, id=drink_log_id)
+
+    if log.user == request.user:
+        for attr, value in data.dict().items():
+            setattr(log, attr, value)
+        try:
+            log.save()
+            return {"message": "good job buddy!"}
+        except Exception as e:
+            print(e)
+
+    return {"message": "You absolutely may not do that."}
+
+
 class DeleteMessage(Schema):
     success: bool
     message: str

@@ -56,7 +56,7 @@ export function formatBarChartDataset(
     const count = dailyLog.length;
     const standardDrinks = dailyLog.reduce(
       (acc: number, log) =>
-        acc + calculateStandardDrinks(+log.volume, log.beverage.abv),
+        acc + calculateStandardDrinks(log.volume, log.beverage.abv),
       0
     );
     return {

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 
 from .fields import DateTimeWithoutTimeZoneField
 from beverages.models import Beverage
@@ -10,7 +11,12 @@ User = get_user_model()
 class DrinkLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     beverage = models.ForeignKey(Beverage, on_delete=models.CASCADE)
-    volume = models.DecimalField("Volume (mL)", max_digits=6, decimal_places=3)
+    volume = models.FloatField(
+        "Volume (mL)",
+        validators=[
+            MinValueValidator(1, "Volume cannot be zero"),
+        ],
+    )
     timestamp = DateTimeWithoutTimeZoneField()
 
     @property

@@ -28,10 +28,12 @@ function DeleteLogModal({ drinkLog }: DeleteLogModalProps) {
   return (
     <Modal>
       <h1 className="font-display font-bold text-xl">Delete this log?</h1>
-      <p className="font-bold text-lg"> Fri Jan 19 2024</p>
       <p className="font-bold text-lg">
-        {drinkLog.beverage.name}, {millilitersToOunces(+drinkLog.volume, 1)}{" "}
-        oz., {toTimeString(new Date(drinkLog.timestamp))}
+        {new Date(drinkLog.timestamp).toDateString()}
+      </p>
+      <p className="font-bold text-lg">
+        {drinkLog.beverage.name}, {millilitersToOunces(drinkLog.volume, 1)} oz.,{" "}
+        {toTimeString(new Date(drinkLog.timestamp))}
       </p>
       <p>Are you sure you want to delete this log?</p>
       <form onSubmit={handleSubmit} className="flex gap-2 justify-end">
