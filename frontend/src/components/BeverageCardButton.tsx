@@ -1,4 +1,3 @@
-import type { MouseEvent } from "react";
 import clsx from "clsx";
 import type { Beverage } from "../api/search";
 import { useModal } from "../context/ModalContext";
@@ -7,7 +6,7 @@ import LogBeverageModal from "./modals/LogBeverageModal";
 
 const colorMap: { [key: string]: string } = {
   beer: "text-teal",
-  cider: "text-gold",
+  cider: "text-gold-800",
 };
 
 interface BeverageCardButtonProps {
@@ -30,7 +29,7 @@ function BeverageCardButton({ beverage }: BeverageCardButtonProps) {
     colorMap[beverage.category.category.toLowerCase()]
   }`;
 
-  function handleClick(e: MouseEvent<HTMLButtonElement>) {
+  function handleClick() {
     openModal(<LogBeverageModal beverage={beverage} />);
   }
 

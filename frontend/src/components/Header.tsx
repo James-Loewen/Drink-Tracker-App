@@ -1,5 +1,5 @@
 import { type MouseEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 
 import { useAuth } from "../context/AuthContext";
@@ -29,7 +29,6 @@ function Header() {
         />
         <ul
           className={clsx({
-            // "h-10 gap-4 justify-center items-center": true,
             hidden: !menuIsOpen,
             flex: menuIsOpen,
             [styles.nav]: menuIsOpen,

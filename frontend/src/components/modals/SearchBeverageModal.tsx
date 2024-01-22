@@ -38,7 +38,6 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
   }
 
   const resultsArray = results.map((beverage) => (
-    // <SearchBeverageResult beverage={beverage} />
     <BeverageCardButton beverage={beverage} />
   ));
 
@@ -46,7 +45,10 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
     <Modal>
       <h2>Log a dang beverage</h2>
       <form onSubmit={handleSubmit} className="flex gap-2">
+        <label htmlFor="beverage-search">Search:</label>
         <input
+          id="beverage-search"
+          name="beverage-search"
           className="px-2 py-1 border border-black rounded-sm"
           type="text"
           value={query}

@@ -3,12 +3,13 @@ import type { BarDatum } from "@nivo/bar";
 import BarChart from "../components/BarChart";
 import { type DrinkLog } from "../api/drinkLog";
 import type { Beverage } from "../api/search";
-import Button from "../components/Button";
 import SearchBeverageModal from "../components/modals/SearchBeverageModal";
 import { useModal } from "../context/ModalContext";
 import clsx from "clsx";
 
 import BeverageCardButton from "../components/BeverageCardButton";
+
+import plusIcon from "../assets/plus.svg";
 
 interface WeekViewLoaderData {
   drinkLog: DrinkLog[];
@@ -24,6 +25,7 @@ interface RecentBeverageCardsProps {
 function RecentBeverageCards({ drinkLog }: RecentBeverageCardsProps) {
   const uniqueBeveragesSet: Set<string> = new Set();
   const nonRepeatingBeverages: Beverage[] = [];
+  console.log(plusIcon);
 
   for (const obj of drinkLog) {
     const beverageName = obj.beverage.name;
@@ -134,9 +136,12 @@ function WeekView() {
         </button>
       </div>
       <BarChart data={dataset} />
-      <Button onClick={() => openModal(<SearchBeverageModal />)}>
-        Beverage Search Modal
-      </Button>
+      <button
+        className="mx-auto my-4 px-2 py-1 flex gap-1 items-center bg-amber-500/50 font-display text-lg border-2 border-[#232232] rounded-lg shadow-1 hover:shadow-2 transition-shadow"
+        onClick={() => openModal(<SearchBeverageModal />)}
+      >
+        Log Beverage <img src={plusIcon} alt="plus symbol" />
+      </button>
       <RecentBeverageCards drinkLog={drinkLog} />
     </main>
   );

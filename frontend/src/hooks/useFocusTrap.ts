@@ -5,12 +5,18 @@ const focusableElemString =
 
 function useFocusTrap(
   ref: MutableRefObject<HTMLElement | null>,
-  closeFn: () => void
+  closeFn: () => void,
+  disableScroll: boolean = false
 ) {
   useEffect(() => {
     // ref.current *should* always be set by now,
     // but to make TypeScript happy, we'll check.
     if (!ref.current) return;
+
+    // Optionally, disable scrolling behind the modal
+    if (disableScroll) {
+      document.body.style.overflow = "hidden";
+    }
 
     const node = ref.current;
     const focusableElements =
@@ -52,6 +58,10 @@ function useFocusTrap(
     document.addEventListener("click", handleMouseEvents, options);
 
     return () => {
+      if (disableScroll) {
+        document.body.style.overflow = "unset";
+      }
+
       document.removeEventListener("keydown", handleKeydown);
       document.removeEventListener("mousedown", handleMouseEvents, options);
       document.removeEventListener("click", handleMouseEvents, options);

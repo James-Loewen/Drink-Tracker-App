@@ -9,7 +9,11 @@ export default {
       },
       colors: {
         teal: "#216a6f",
-        gold: "#9e6c00",
+        gold: {
+          default: "#daa520",
+          500: "#daa520",
+          800: "#9e6c00",
+        },
       },
       boxShadow: {
         1: "#232232 -1px 2px",
