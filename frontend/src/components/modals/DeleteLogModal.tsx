@@ -44,7 +44,7 @@ function DeleteLogModal({ drinkLog }: DeleteLogModalProps) {
       <p>Are you sure you want to delete this log?</p>
       <form onSubmit={handleSubmit} className="flex gap-2 justify-end">
         <Button variant="secondary" onClick={() => setModal(null)}>
-          Close
+          Cancel
         </Button>
         <Button variant="danger" type="submit">
           Delete

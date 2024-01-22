@@ -7,6 +7,14 @@ export default {
         sans: ["Nunito"],
         display: ["Poppins"],
       },
+      colors: {
+        teal: "#216a6f",
+        gold: "#9e6c00",
+      },
+      boxShadow: {
+        1: "#232232 -1px 2px",
+        2: "#232232 -2px 4px 1px",
+      },
     },
   },
   plugins: [],

@@ -1,11 +1,13 @@
 import { type FormEvent, useState } from "react";
 import clsx from "clsx";
 import { useModal } from "../../context/ModalContext";
-import Button from "../Button";
-import LogBeverageModal from "./LogBeverageModal";
 import type { Beverage } from "../../api/search";
 import { queryBeverages } from "../../api/search";
+
+import Button from "../Button";
 import Modal from "./BaseModal";
+import LogBeverageModal from "./LogBeverageModal";
+import BeverageCardButton from "../BeverageCardButton";
 
 interface SearchBeverageResultProps {
   beverage: Beverage;
@@ -55,7 +57,8 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
   }
 
   const resultsArray = results.map((beverage) => (
-    <SearchBeverageResult beverage={beverage} />
+    // <SearchBeverageResult beverage={beverage} />
+    <BeverageCardButton beverage={beverage} />
   ));
 
   return (

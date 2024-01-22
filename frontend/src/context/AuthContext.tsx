@@ -45,7 +45,6 @@ export function AuthProvider({ children }: AuthProps) {
       }
 
       const data = await res.json();
-      console.log(data);
       setIsLoading(false);
       setUser(data);
     }
