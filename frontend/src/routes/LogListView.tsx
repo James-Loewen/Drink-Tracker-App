@@ -70,7 +70,7 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
       ) : (
         <tr>
           <td
-            className="px-2 py-3 font-mono font-bold text-neutral-500"
+            className="px-2 py-3 font-mono font-bold text-neutral-500 text-center"
             colSpan={6}
           >
             No data

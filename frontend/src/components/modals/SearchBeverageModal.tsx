@@ -7,7 +7,6 @@ import { queryBeverages } from "../../api/search";
 import Button from "../Button";
 import Modal from "./BaseModal";
 import BeverageCardButton from "../BeverageCardButton";
-import AddBeverageModal from "./CreateBeverageModal";
 import SearchBrandModal from "./SearchBrandModal";
 
 interface SearchBeverageModalProps {
@@ -15,14 +14,10 @@ interface SearchBeverageModalProps {
 }
 
 function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
   const [query, setQuery] = useState(searchText);
   const [results, setResults] = useState<Beverage[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
-
-  function handleClose() {
-    closeModal();
-  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -47,7 +42,9 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
     <Modal>
       <h2 className="font-display font-bold text-2xl">Search for a beverage</h2>
       <form onSubmit={handleSubmit} className="flex gap-2 items-center">
-        <label htmlFor="beverage-search">Search:</label>
+        <label className="sr-only" htmlFor="beverage-search">
+          Search
+        </label>
         <input
           id="beverage-search"
           name="beverage-search"
@@ -55,6 +52,7 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search..."
         />
         <Button variant="primary" type="submit">
           Search
@@ -68,20 +66,12 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
       <div className={clsx("grid", { "grid-cols-2": hasSearched })}>
         <Button
           variant="secondary"
-          // onClick={() => openModal(<AddBeverageModal />)}
           onClick={() => openModal(<SearchBrandModal />)}
           className="justify-self-start"
           hidden={!hasSearched}
         >
           + New Beverage
         </Button>
-        {/* <Button
-          variant="secondary"
-          onClick={handleClose}
-          className="justify-self-end"
-        >
-          Close
-        </Button> */}
       </div>
     </Modal>
   );

@@ -20,7 +20,7 @@ function Header() {
   }
 
   return (
-    <header className="h-12 relative border border-[coral]">
+    <header className="h-12 relative">
       <nav className="">
         <MenuButton
           isOpen={menuIsOpen}

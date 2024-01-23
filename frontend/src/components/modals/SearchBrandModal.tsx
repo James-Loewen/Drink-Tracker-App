@@ -1,8 +1,8 @@
 import { type FormEvent, useState } from "react";
 import clsx from "clsx";
+
 import { useModal } from "../../context/ModalContext";
-import type { Brand } from "../../api/search";
-import { queryBrands } from "../../api/search";
+import { type Brand, queryBrands } from "../../api/search";
 
 import Button from "../Button";
 import Modal from "./BaseModal";
@@ -14,14 +14,10 @@ interface SearchBrandModalProps {
 }
 
 function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
   const [query, setQuery] = useState(searchText);
   const [results, setResults] = useState<Brand[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
-
-  function handleClose() {
-    closeModal();
-  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,7 +40,9 @@ function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
     <Modal>
       <h2 className="font-display font-bold text-2xl">Search for a brand</h2>
       <form onSubmit={handleSubmit} className="flex gap-2 items-center">
-        <label htmlFor="brand-search">Search:</label>
+        <label className="sr-only" htmlFor="brand-search">
+          Search
+        </label>
         <input
           id="brand-search"
           name="brand-search"
@@ -52,6 +50,7 @@ function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search..."
         />
         <Button variant="primary" type="submit">
           Search

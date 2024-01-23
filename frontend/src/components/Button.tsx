@@ -28,8 +28,10 @@ function Button({
     "active:ring-2 ring-offset-1 ring-blue-400"
   );
   const danger = clsx(
-    "bg-red-800 text-white text-sm font-bold",
-    "hover:bg-red-900",
+    // "bg-red-800 text-white text-sm font-bold",
+    "bg-[#862809]/90 text-white text-sm font-bold",
+    // "hover:bg-red-900",
+    "hover:bg-[#862809]",
     "active:ring-2 ring-offset-1 ring-blue-400"
   );
 

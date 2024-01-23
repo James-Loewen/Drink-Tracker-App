@@ -11,13 +11,15 @@ type BarChartProps = {
 
 function BarChart({ data }: BarChartProps) {
   const { width } = useWindowDimensions();
-  // console.log(data);
 
   const tickValues = generateAxisTicks(data);
   const containerCount = data.reduce((sum, day) => sum + +day.Containers, 0);
-  const standardDrinkCount = data
+  const standardDrinkCount = +data
     .reduce((sum, day) => sum + +day["Standard Drinks"], 0)
     .toFixed(2);
+
+  const legendTextClass =
+    "flex gap-2 items-center font-mono sm:text-lg md:text-xl transition";
 
   return (
     <>
@@ -26,29 +28,18 @@ function BarChart({ data }: BarChartProps) {
           data={data}
           keys={["Containers", "Standard Drinks"]}
           indexBy="day"
-          margin={{ top: 50, right: 20, bottom: 80, left: 25 }}
-          padding={0.3}
-          innerPadding={width > 600 ? 8 : 3}
+          margin={{ top: 50, right: 20, bottom: 50, left: 25 }}
+          padding={0.2}
+          innerPadding={width > 600 ? 6 : 2}
           valueScale={{
             type: "linear",
             min: 0,
             max: tickValues[tickValues.length - 1],
           }}
           indexScale={{ type: "band", round: true }}
-          colors={["rgba(33, 106, 111, .85)", "rgba(218, 165, 32, .85)"]}
+          // colors={["rgba(33, 106, 111, .85)", "rgba(218, 165, 32, .85)"]}
+          colors={["rgba(33, 106, 90, .85)", "rgba(218, 165, 32, .85)"]}
           borderRadius={2}
-          // borderColor={{
-          //   from: "color",
-          //   modifiers: [["darker", 1.6]],
-          // }}
-          // borderColor={(d) => {
-          //   if (d.data.value > 4) {
-          //     return "rgba(255, 0, 0, .5)";
-          //   } else {
-          //     return d.color;
-          //   }
-          // }}
-          // borderWidth={2}
           markers={[
             {
               axis: "y",
@@ -80,85 +71,70 @@ function BarChart({ data }: BarChartProps) {
           theme={{
             text: { fontSize: 16, fontFamily: "monospace" },
           }}
-          legends={[
-            {
-              dataFrom: "keys",
-              anchor: "bottom",
-              direction: "row",
-              justify: false,
-              translateX: -20,
-              translateY: 65,
-              itemsSpacing: 40,
-              itemWidth: 100,
-              itemHeight: 20,
-              itemDirection: "left-to-right",
-              itemOpacity: 0.85,
-              symbolSize: 15,
-              symbolShape: "circle",
-            },
-          ]}
+          // legends={[
+          //   {
+          //     dataFrom: "keys",
+          //     anchor: "bottom",
+          //     direction: "row",
+          //     justify: false,
+          //     translateX: -20,
+          //     translateY: 65,
+          //     itemsSpacing: 40,
+          //     itemWidth: 100,
+          //     itemHeight: 20,
+          //     itemDirection: "left-to-right",
+          //     itemOpacity: 0.85,
+          //     symbolSize: 15,
+          //     symbolShape: "circle",
+          //   },
+          // ]}
           role="application"
           ariaLabel="Nivo bar chart demo"
-          barAriaLabel={(e) =>
-            e.id + ": " + e.formattedValue + " in country: " + e.indexValue
-          }
+          // barAriaLabel={(e) =>
+          //   e.id + ": " + e.formattedValue + " in country: " + e.indexValue
+          // }
         />
       </div>
-      <div className="static">
-        <p className={clsx(containerCount > 14 && "text-red-700")}>
+      <div className="mb-6 px-4 flex gap-x-6 flex-wrap justify-center text-slate-600">
+        <span
+          className={clsx(
+            legendTextClass,
+            containerCount > 14 && "text-danger"
+          )}
+        >
+          <svg
+            width={16}
+            viewBox="0 0 24 24"
+            fill="rgba(33, 106, 90, .85)"
+            stroke="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="inline"
+          >
+            <circle cx="12" cy="12" r="12" />
+          </svg>
           Containers: {containerCount}
-        </p>
-        <p className={clsx(+standardDrinkCount > 14 && "text-red-700")}>
+        </span>
+        <span
+          className={clsx(
+            legendTextClass,
+            standardDrinkCount > 14 && "text-danger"
+          )}
+        >
+          <svg
+            width={16}
+            viewBox="0 0 24 24"
+            fill="rgba(218, 165, 32, .85)"
+            stroke="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="inline"
+          >
+            <circle cx="12" cy="12" r="12" />
+          </svg>
           Standard Drinks: {standardDrinkCount}
-        </p>
+        </span>
       </div>
-      <a
-        href="https://codesandbox.io/p/sandbox/vibrant-ives-3gkfx?file=%2Fsrc%2FBusinessIntelligence.js%3A65%2C22"
-        target="_blank"
-        className="text-blue-600 underline"
-      >
-        Grouped bar shared tooltip
-      </a>
     </>
   );
 }
 
 export default BarChart;
-
-// arr = [
-//   {
-//     day: "Sunday",
-//     count1: 3,
-//     count2: 3.2,
-//   },
-//   {
-//     day: "Monday",
-//     count1: 4,
-//     count2: 4.2,
-//   },
-//   {
-//     day: "Tuesday",
-//     count1: 5,
-//     count2: 5.1,
-//   },
-//   {
-//     day: "Wednesday",
-//     count1: 1,
-//     count2: 1.1,
-//   },
-//   {
-//     day: "Thursday",
-//     count1: 6,
-//     count2: 5.5,
-//   },
-//   {
-//     day: "Friday",
-//     count1: 4,
-//     count2: 3.9,
-//   },
-//   {
-//     day: "Saturday",
-//     count1: 2,
-//     count2: 2.6,
-//   },
-// ];

@@ -22,6 +22,10 @@ export const WEEKDAYS = [
   "Saturday",
 ];
 
+export function toDateString(date: Date) {
+  return format(date, "M/d/yy");
+}
+
 export function toTimeString(date: Date) {
   return format(date, "h:mmaaa");
 }

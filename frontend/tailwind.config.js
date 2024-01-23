@@ -14,6 +14,7 @@ export default {
           500: "#daa520",
           800: "#9e6c00",
         },
+        danger: "#933232",
       },
       boxShadow: {
         1: "#232232 -1px 2px",

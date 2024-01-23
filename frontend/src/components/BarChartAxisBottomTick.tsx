@@ -5,8 +5,7 @@ interface BarChartAxisBottomTickProps extends AxisTickProps<any> {
 }
 
 function BarChartAxisBottomTick(props: BarChartAxisBottomTickProps) {
-  // console.log(props);
-  const value = props.screenWidth > 650 ? props.value : props.value.slice(0, 3);
+  const value = props.screenWidth > 720 ? props.value : props.value.slice(0, 3);
 
   return (
     <g transform={`translate(${props.x},${props.y})`}>
@@ -21,7 +20,7 @@ function BarChartAxisBottomTick(props: BarChartAxisBottomTickProps) {
         dominantBaseline={props.textBaseline}
         textAnchor={props.textAnchor}
         transform={`translate(${props.textX},${props.textY}) rotate(${props.rotate})`}
-        className="font-mono font-bold"
+        className="font-display"
       >
         {value}
       </text>

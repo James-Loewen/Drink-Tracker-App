@@ -10,6 +10,7 @@ import clsx from "clsx";
 import BeverageCardButton from "../components/BeverageCardButton";
 
 import plusIcon from "../assets/plus.svg";
+import { toDateString } from "../utils/datetime";
 
 interface WeekViewLoaderData {
   drinkLog: DrinkLog[];
@@ -62,14 +63,13 @@ function WeekView() {
   const weekOffset = +(url.searchParams.get("w") ?? 0);
   const navigate = useNavigate();
 
-  const chevronClass = clsx(
-    "p-2 bg-neutral-400/30 rounded-full",
-    "hover:bg-neutral-400/40",
-    "transition-colors"
-  );
+  const chevronBase = "p-2 bg-slate-400/30 rounded-[50%] transition-colors";
 
-  const rightChevron = clsx(chevronClass, {
-    "text-gray-600/30 hover:bg-neutral-400/30 cursor-default": weekOffset === 0,
+  const leftChevron = clsx(chevronBase, "hover:bg-slate-400/40");
+
+  const rightChevron = clsx(chevronBase, {
+    "text-neutral-400/80 cursor-default": weekOffset === 0,
+    "hover:bg-slate-400/40": weekOffset !== 0,
   });
 
   function prevWeek() {
@@ -92,7 +92,7 @@ function WeekView() {
   return (
     <main className="mx-auto w-[min(800px,_100%)]">
       <div className="p-4 flex gap-2 justify-between items-center">
-        <button onClick={prevWeek} className={chevronClass}>
+        <button onClick={prevWeek} className={leftChevron}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -112,7 +112,7 @@ function WeekView() {
           </span>
         </button>
         <h1 className="font-bold font-display text-center text-xl">
-          {startDate.toLocaleDateString()} – {endDate.toLocaleDateString()}
+          {toDateString(startDate)} – {toDateString(endDate)}
         </h1>
         <button onClick={nextWeek} className={rightChevron}>
           <svg
