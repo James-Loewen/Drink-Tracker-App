@@ -45,15 +45,29 @@
 
 .x-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: .25rem;
+  right: .25rem;
   padding: .25rem;
   border-radius: 50%;
   background-color: transparent;
   transition: background-color 150ms;
 
   &:hover {
-    background-color: theme('colors.slate.300');
+    background-color: theme('colors.slate.300' / 70%);
+  }
+}
+
+.ellipsis-btn {
+  position: absolute;
+  top: .25rem;
+  right: 2.25rem;
+  padding: .25rem;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color 150ms;
+
+  &:hover {
+    background-color: theme('colors.slate.300' / 70%);
   }
 }
 

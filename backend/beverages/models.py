@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.postgres.indexes import GistIndex
 
-from .managers import BeverageManager
+from .managers import BeverageManager, BrandManager
 
 User = get_user_model()
 
@@ -30,6 +30,9 @@ class Brand(models.Model):
         default=get_moderator_admin_pk,
     )
 
+    # Custom Manager
+    objects = BrandManager()
+
     class Meta:
         indexes = [
             GistIndex(
@@ -44,7 +47,7 @@ class Brand(models.Model):
 
 
 class Beverage(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     name = models.CharField("Beverage name", max_length=150)
     abv = models.FloatField(

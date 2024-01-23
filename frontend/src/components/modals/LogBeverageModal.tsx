@@ -2,12 +2,14 @@ import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { type Beverage } from "../../api/search";
 import { useModal } from "../../context/ModalContext";
-import BeverageSearchModal from "./SearchBeverageModal";
-import Button from "../Button";
-import Modal from "./BaseModal";
 import { toCustomIsoFormat } from "../../utils/datetime";
 import { ouncesToMilliliters } from "../../utils/convertVolume";
 import { postDrinkLog } from "../../api/drinkLog";
+
+import Button from "../Button";
+import ReportButton from "../ReportButton";
+import Modal from "./BaseModal";
+import SearchBeverageModal from "./SearchBeverageModal";
 
 interface LogBeverageModalProps {
   beverage: Beverage;
@@ -34,7 +36,8 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
 
   return (
     <Modal>
-      <h1 className="font-bold text-xl">Form for logging a beverage</h1>
+      <ReportButton onClick={() => alert("Report!!!")} />
+      <h1 className="font-display font-bold text-2xl">Log Details</h1>
       <p>Brand: {beverage.brand.name}</p>
       <p>Beverage: {beverage.name}</p>
       <p>Abv: {beverage.abv}%</p>
@@ -82,12 +85,28 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
         </div>
         <div className="py-2 flex gap-2 justify-end">
           <Button
+            className="flex gap-2 items-center group"
             variant="secondary"
             onClick={() =>
-              openModal(<BeverageSearchModal searchText={beverage.name} />)
+              openModal(<SearchBeverageModal searchText={beverage.name} />)
             }
           >
-            Back
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="group-hover:animate-pulse"
+            >
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Beverage Search
           </Button>
           <Button type="submit">+ Log</Button>
         </div>

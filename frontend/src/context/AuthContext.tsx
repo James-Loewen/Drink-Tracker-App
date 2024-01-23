@@ -52,6 +52,13 @@ export function AuthProvider({ children }: AuthProps) {
     fetchUserDetails();
   }, []);
 
+  const value = {
+    user,
+    setUser,
+    login,
+    logout,
+  };
+
   // if (isLoading) {
   //   return (
   //     // <div className="w-full h-screen flex justify-center items-center">
@@ -63,9 +70,7 @@ export function AuthProvider({ children }: AuthProps) {
 
   if (!isLoading) {
     return (
-      <AuthContext.Provider value={{ user, setUser, login, logout }}>
-        {children}
-      </AuthContext.Provider>
+      <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
     );
   }
 }

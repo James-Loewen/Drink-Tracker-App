@@ -39,7 +39,7 @@ def list_drink_log(request, startDate: str = "", endDate: str = ""):
 
 
 @router.post("", response={201: DrinkLogOut, 400: str})
-def post_drink_log(request, data: DrinkLogIn):
+def create_drink_log(request, data: DrinkLogIn):
     try:
         log = DrinkLog.objects.create(user=request.user, **data.dict())
     except Exception as e:

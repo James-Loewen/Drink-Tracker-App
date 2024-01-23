@@ -13,13 +13,13 @@ function Button({
   ...props
 }: ButtonProps) {
   const primary = clsx(
-    "bg-blue-600 text-white text-sm font-bold",
-    "hover:bg-blue-800",
+    "bg-teal text-white text-sm font-bold",
+    "hover:bg-teal/80",
     "active:ring-2 ring-offset-1 ring-blue-400"
   );
   const secondary = clsx(
-    "bg-white border-2 border-blue-600 text-blue-600 text-sm font-bold",
-    "hover:bg-gray-100",
+    "bg-white border-2 border-teal text-teal text-sm font-bold",
+    "hover:bg-gray-200/60",
     "active:ring-2 ring-offset-1 ring-blue-400"
   );
   const tertiary = clsx(

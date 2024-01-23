@@ -41,19 +41,17 @@ export function ModalProvider({ children }: ModalProviderProps) {
     setModal(modalComponent);
   }
 
+  const value = {
+    modal,
+    setModal,
+    closeModal,
+    openModal,
+    lastActiveElement,
+    setLastActiveElement,
+  };
+
   return (
-    <ModalContext.Provider
-      value={{
-        modal,
-        setModal,
-        closeModal,
-        openModal,
-        lastActiveElement,
-        setLastActiveElement,
-      }}
-    >
-      {children}
-    </ModalContext.Provider>
+    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
 }
 

@@ -1,23 +1,22 @@
 import { type FormEvent, useState } from "react";
 import clsx from "clsx";
 import { useModal } from "../../context/ModalContext";
-import type { Beverage } from "../../api/search";
-import { queryBeverages } from "../../api/search";
+import type { Brand } from "../../api/search";
+import { queryBrands } from "../../api/search";
 
 import Button from "../Button";
 import Modal from "./BaseModal";
-import BeverageCardButton from "../BeverageCardButton";
-import AddBeverageModal from "./CreateBeverageModal";
-import SearchBrandModal from "./SearchBrandModal";
+import BrandCardButton from "../BrandCardButton";
+import CreateBrandModal from "./CreateBrandModal";
 
-interface SearchBeverageModalProps {
+interface SearchBrandModalProps {
   searchText?: string;
 }
 
-function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
+function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
   const { openModal, closeModal } = useModal();
   const [query, setQuery] = useState(searchText);
-  const [results, setResults] = useState<Beverage[]>([]);
+  const [results, setResults] = useState<Brand[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
 
   function handleClose() {
@@ -34,23 +33,21 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
 
     setQuery(q);
 
-    const data = await queryBeverages(q);
+    const data = await queryBrands(q);
     setResults(data.results);
     setHasSearched(true);
   }
 
-  const resultsList = results.map((beverage) => (
-    <BeverageCardButton beverage={beverage} />
-  ));
+  const resultsList = results.map((brand) => <BrandCardButton brand={brand} />);
 
   return (
     <Modal>
-      <h2 className="font-display font-bold text-2xl">Search for a beverage</h2>
+      <h2 className="font-display font-bold text-2xl">Search for a brand</h2>
       <form onSubmit={handleSubmit} className="flex gap-2 items-center">
-        <label htmlFor="beverage-search">Search:</label>
+        <label htmlFor="brand-search">Search:</label>
         <input
-          id="beverage-search"
-          name="beverage-search"
+          id="brand-search"
+          name="brand-search"
           className="px-2 py-1 border border-black rounded-sm"
           type="text"
           value={query}
@@ -68,12 +65,11 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
       <div className={clsx("grid", { "grid-cols-2": hasSearched })}>
         <Button
           variant="secondary"
-          // onClick={() => openModal(<AddBeverageModal />)}
-          onClick={() => openModal(<SearchBrandModal />)}
+          onClick={() => openModal(<CreateBrandModal />)}
           className="justify-self-start"
           hidden={!hasSearched}
         >
-          + New Beverage
+          + New Brand
         </Button>
         {/* <Button
           variant="secondary"
@@ -87,4 +83,4 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
   );
 }
 
-export default SearchBeverageModal;
+export default SearchBrandModal;

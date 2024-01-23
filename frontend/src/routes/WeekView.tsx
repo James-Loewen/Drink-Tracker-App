@@ -25,7 +25,6 @@ interface RecentBeverageCardsProps {
 function RecentBeverageCards({ drinkLog }: RecentBeverageCardsProps) {
   const uniqueBeveragesSet: Set<string> = new Set();
   const nonRepeatingBeverages: Beverage[] = [];
-  console.log(plusIcon);
 
   for (const obj of drinkLog) {
     const beverageName = obj.beverage.name;
