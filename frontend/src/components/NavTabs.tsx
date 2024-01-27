@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import clsx from "clsx";
 
 import styles from "./NavTabs.module.css";
 

@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { type Beverage } from "../../api/search";
+import type { Beverage } from "../../api/search";
 import { useModal } from "../../context/ModalContext";
 import { toCustomIsoFormat } from "../../utils/datetime";
 import { ouncesToMilliliters } from "../../utils/convertVolume";
@@ -18,6 +18,7 @@ interface LogBeverageModalProps {
 function LogBeverageModal({ beverage }: LogBeverageModalProps) {
   const [currentDate, currentTime] = toCustomIsoFormat(new Date()).split(" ");
   const [volume, setVolume] = useState(12);
+  const [volumeUnit, setVolumeUnit] = useState<"oz" | "mL">("oz");
   const [date, setDate] = useState(currentDate);
   const [time, setTime] = useState(currentTime.slice(0, 5));
   const { openModal, closeModal } = useModal();
@@ -38,14 +39,22 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
     <Modal>
       <ReportButton onClick={() => alert("Report!!!")} />
       <h1 className="font-display font-bold text-2xl">Log Details</h1>
-      <p>Brand: {beverage.brand.name}</p>
-      <p>Beverage: {beverage.name}</p>
-      <p>Abv: {beverage.abv}%</p>
-      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-        <div className="flex gap-2 items-center">
-          <label className="w-20" htmlFor="volume">
-            Volume
-          </label>
+      <div className="grid grid-cols-[1fr,_4fr] gap-y-2 gap-x-4">
+        <span>Brand:</span>
+        <span className="font-display font-bold">{beverage.brand.name}</span>
+        <span>Beverage:</span>
+        <span className="font-display font-bold">{beverage.name}</span>
+        <span>Abv:</span>
+        <span className="font-display font-bold">{beverage.abv}%</span>
+      </div>
+      <form
+        className="grid grid-cols-[1fr,_4fr] gap-2 items-center"
+        onSubmit={handleSubmit}
+      >
+        <label className="w-20" htmlFor="volume">
+          Volume:
+        </label>
+        <div className="flex gap-4 justify-start items-baseline">
           <input
             name="volume"
             id="volume"
@@ -54,36 +63,42 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
             step={0.1}
             onChange={(e) => setVolume(+e.target.value)}
           />
+          <select
+            className="px-2 py-1 mr-6 bg-transparent border-b-[3px] border-[#232232] text-lg"
+            name="volume-unit"
+            id="volume-unit"
+            value={volumeUnit}
+            onChange={(e) => setVolumeUnit(e.target.value as "oz" | "mL")}
+          >
+            <option value="oz">oz</option>
+            <option value="mL">mL</option>
+          </select>
         </div>
-        <div className="flex gap-2 items-center">
-          <label className="w-20" htmlFor="date">
-            Date
-          </label>
-          <input
-            name="date"
-            id="date"
-            type="date"
-            value={date}
-            max={currentDate}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-        </div>
-        <div className="flex gap-2 items-center">
-          <label className="w-20" htmlFor="time">
-            Time
-          </label>
-          <input
-            name="time"
-            id="time"
-            type="time"
-            value={time}
-            // max={currentTime}
-            onChange={(e) => setTime(e.target.value)}
-            required
-          />
-        </div>
-        <div className="py-2 flex gap-2 justify-end">
+        <label className="w-20" htmlFor="date">
+          Date:
+        </label>
+        <input
+          name="date"
+          id="date"
+          type="date"
+          value={date}
+          max={currentDate}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        />
+        <label className="w-20" htmlFor="time">
+          Time:
+        </label>
+        <input
+          name="time"
+          id="time"
+          type="time"
+          value={time}
+          // max={currentTime}
+          onChange={(e) => setTime(e.target.value)}
+          required
+        />
+        <div className="py-2 col-span-2 flex gap-2 justify-end">
           <Button
             className="flex gap-2 items-center group"
             variant="secondary"

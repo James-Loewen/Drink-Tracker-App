@@ -26,7 +26,7 @@ function BrandCardButton({ brand }: BrandCardButtonProps) {
 
   return (
     <button onClick={handleClick} className={buttonClass}>
-      <span className="font-bold text-gray-700">{brand.name}</span>
+      <span className="font-bold text-left text-gray-700">{brand.name}</span>
     </button>
   );
 }

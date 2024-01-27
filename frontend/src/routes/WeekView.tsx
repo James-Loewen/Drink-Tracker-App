@@ -52,6 +52,12 @@ function RecentBeverageCards({ drinkLog }: RecentBeverageCardsProps) {
       </div>
     );
   }
+
+  return (
+    <div className="my-8 font-display font-bold text-center text-xl sm:text-2xl">
+      No data from this week.
+    </div>
+  );
 }
 
 function WeekView() {

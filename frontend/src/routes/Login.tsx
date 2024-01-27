@@ -21,7 +21,7 @@ function Login() {
       setErrorText(error.detail);
     } else if (data) {
       // window.location.reload();
-      window.location.assign("/");
+      window.location.assign("/graph/week");
     }
   }
 
