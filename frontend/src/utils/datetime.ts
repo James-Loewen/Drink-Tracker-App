@@ -74,6 +74,20 @@ export function getMonthStartAndEndDate(
   }
 
   return {
+    startDate: startOfMonth(date),
+    endDate: endOfMonth(date),
+  };
+}
+
+export function getFullMonthStartAndEndDate(
+  monthOffset: number = 0,
+  date = new Date()
+) {
+  if (monthOffset > 0) {
+    date = subMonths(date, monthOffset);
+  }
+
+  return {
     startDate: startOfWeek(startOfMonth(date)),
     endDate: endOfWeek(endOfMonth(date)),
   };

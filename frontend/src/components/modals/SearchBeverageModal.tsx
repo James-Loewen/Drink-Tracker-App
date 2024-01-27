@@ -62,7 +62,7 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
         </Button>
       </form>
       {results.length > 0 && (
-        <div className="p-4 w-80 max-h-[50vh] overflow-auto flex flex-col gap-2">
+        <div className="p-3 max-h-[50vh] overflow-auto flex flex-col gap-3">
           {resultsList}
         </div>
       )}

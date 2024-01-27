@@ -17,6 +17,7 @@ import "./index.css";
 import {
   getWeekStartAndEndDate,
   getMonthStartAndEndDate,
+  getFullMonthStartAndEndDate,
 } from "./utils/datetime";
 import { fetchDrinkLog } from "./api/drinkLog";
 import {
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
         element: <WeekView />,
         loader: async ({ request }) => {
           const url = new URL(request.url);
-          const weekOffset = parseInt(url.searchParams.get("w") ?? "0");
+          const weekOffset = +(url.searchParams.get("w") ?? "0");
           const { startDate, endDate } = getWeekStartAndEndDate(weekOffset);
           const drinkLog = await fetchDrinkLog(startDate, endDate);
           const dataset = formatBarChartDataset(drinkLog, startDate, endDate);
@@ -60,8 +61,9 @@ const router = createBrowserRouter([
         element: <MonthView />,
         loader: async ({ request }) => {
           const url = new URL(request.url);
-          const monthOffset = parseInt(url.searchParams.get("m") ?? "0");
-          const { startDate, endDate } = getMonthStartAndEndDate(monthOffset);
+          const monthOffset = +(url.searchParams.get("m") ?? "0");
+          const { startDate, endDate } =
+            getFullMonthStartAndEndDate(monthOffset);
           const drinkLog = await fetchDrinkLog(startDate, endDate);
           const dataset = formatMonthDataset(drinkLog, startDate, endDate);
           return { drinkLog, startDate, endDate, dataset };
@@ -82,10 +84,10 @@ const router = createBrowserRouter([
         element: <LogListView />,
         loader: async ({ request }) => {
           const url = new URL(request.url);
-          const monthOffset = parseInt(url.searchParams.get("m") ?? "0");
+          const monthOffset = +(url.searchParams.get("m") ?? "0");
           const { startDate, endDate } = getMonthStartAndEndDate(monthOffset);
           const drinkLog = await fetchDrinkLog(startDate, endDate);
-          return { drinkLog, startDate, endDate };
+          return { drinkLog, startDate, endDate, monthOffset };
         },
       },
     ],

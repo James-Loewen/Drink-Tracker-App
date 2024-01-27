@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 
-interface BarChartHeaderProps {
+interface TimeframePickerProps {
   title: string;
   offsetParam: string;
 }
 
-function BarChartHeader({ title, offsetParam }: BarChartHeaderProps) {
+function TimeframePicker({ title, offsetParam }: TimeframePickerProps) {
   const url = new URL(window.location.href);
   const offset = +(url.searchParams.get(offsetParam) ?? 0);
   const navigate = useNavigate();
@@ -82,4 +82,4 @@ function BarChartHeader({ title, offsetParam }: BarChartHeaderProps) {
   );
 }
 
-export default BarChartHeader;
+export default TimeframePicker;

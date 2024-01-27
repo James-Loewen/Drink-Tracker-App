@@ -61,7 +61,7 @@ function BarChart({
       : undefined;
 
   const legendTextClass =
-    "flex gap-2 items-center font-mono sm:text-lg md:text-xl transition";
+    "flex gap-2 items-center font-display sm:text-base md:text-lg transition";
 
   return (
     <>
@@ -111,7 +111,7 @@ function BarChart({
           ariaLabel="Nivo bar chart demo"
         />
       </div>
-      <div className="mb-6 px-4 flex gap-x-6 flex-wrap justify-center text-slate-600">
+      <div className="mt-3 mb-6 px-4 flex gap-x-6 flex-wrap justify-center text-black">
         <span
           className={clsx(
             legendTextClass,

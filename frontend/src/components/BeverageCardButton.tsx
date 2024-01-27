@@ -40,7 +40,7 @@ function BeverageCardButton({ beverage }: BeverageCardButtonProps) {
       <span className="justify-self-end">
         {beverage.abv}% <span className={coloredText}>abv</span>
       </span>
-      <div className="col-span-2 flex gap-2 flex-wrap">
+      <div className="col-span-2 flex flex-col gap-2 text-left leading-4">
         <span className="text-gray-700">{beverage.brand.name}</span>
         <span className="text-gray-700 font-bold">{beverage.name}</span>
       </div>
