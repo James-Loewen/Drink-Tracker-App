@@ -4,16 +4,16 @@ import { useModal } from "../../context/ModalContext";
 import styles from "./BaseModal.module.css";
 
 import xIcon from "../../assets/x.svg";
-import flagIcon from "../../assets/flag.svg";
 
 interface BaseModalProps {
   children: ReactNode;
+  focusTrapTriggers?: any[]; // <-- State vars that should trigger a reload
 }
 
-function BaseModal({ children }: BaseModalProps) {
+function BaseModal({ children, focusTrapTriggers = [] }: BaseModalProps) {
   const { closeModal } = useModal();
   const ref = useRef(null);
-  useFocusTrap(ref, closeModal, true);
+  useFocusTrap(ref, closeModal, true, focusTrapTriggers);
 
   return (
     <div ref={ref} className={styles.modal} tabIndex={0}>
@@ -24,10 +24,6 @@ function BaseModal({ children }: BaseModalProps) {
         <img width={24} height={24} src={xIcon} alt="Close Icon" />
         <span className="sr-only">Exit Modal</span>
       </button>
-      {/* <button className={styles.ellipsisBtn} onClick={closeModal}>
-        <img width={24} height={24} src={flagIcon} alt="Close Icon" />
-        <span className="sr-only">Exit Modal</span>
-      </button> */}
       {children}
     </div>
   );

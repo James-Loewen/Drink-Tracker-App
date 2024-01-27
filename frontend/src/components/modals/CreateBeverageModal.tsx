@@ -2,7 +2,6 @@ import { type FormEvent, type MouseEvent, useState, useEffect } from "react";
 
 import { useModal } from "../../context/ModalContext";
 import {
-  type Beverage,
   type Brand,
   type Category,
   getCategories,
@@ -18,8 +17,6 @@ import SearchBrandModal from "./SearchBrandModal";
 type FormOrMouseEvent =
   | FormEvent<HTMLFormElement>
   | MouseEvent<HTMLButtonElement>;
-
-// interface StashedBeverageData extends Partial<Beverage> {}
 
 interface CreateBeverageModalProps {
   brand: Brand;
@@ -43,12 +40,14 @@ function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
   async function handleSubmit(e: FormOrMouseEvent) {
     e.preventDefault();
     if (name === "" || categoryId === undefined) return;
-    console.log("hello");
-    console.log(categoryId);
     const res = await createBeverage(name, abv, categoryId, brand.id);
 
     if (res.status === 400) {
-      console.log("Set validation errors here...");
+      console.log("TODO: Handle validation errors here...");
+      /**
+       * Whether I end up using Django Ninja or Django Rest Framework,
+       * I should set up some standard validation error handling.
+       */
       return;
     }
 
@@ -64,7 +63,40 @@ function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
 
   return (
     <Modal>
-      <h1 className="font-display font-bold text-2xl">Add New Beverage</h1>
+      <h2 className="font-display font-bold text-2xl">Add New Beverage</h2>
+      <details className="cursor-pointer">
+        <summary className="flex gap-1 items-center text-[#232232]">
+          <span>Notice</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            // class="feather feather-info"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </summary>
+        <div className="pl-2 border-l-4 border-danger/80">
+          <p className="my-3">
+            Note: All Brands and Beverages that you add{" "}
+            <b>are associated with your user account</b>. This information is
+            not publicly available to other users, but will be viewed by
+            moderators.
+          </p>
+          <p className="my-3">
+            Any submissions that violate application guidelines may result in a
+            suspension or ban.
+          </p>
+        </div>
+      </details>
       <span>Brand:</span>
       <div className="flex gap-1 items-center">
         <span className="font-display text-lg">{brand.name}</span>

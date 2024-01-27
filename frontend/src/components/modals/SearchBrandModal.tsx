@@ -1,5 +1,4 @@
 import { type FormEvent, useState } from "react";
-import clsx from "clsx";
 
 import { useModal } from "../../context/ModalContext";
 import { type Brand, queryBrands } from "../../api/search";
@@ -17,6 +16,10 @@ function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
   const { openModal } = useModal();
   const [query, setQuery] = useState(searchText);
   const [results, setResults] = useState<Brand[]>([]);
+  /**
+   * This state triggers useFocusTrap reloads on every form submit
+   * so that the newly loaded buttons are keyboard-focusable
+   */
   const [hasSearched, setHasSearched] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -37,7 +40,7 @@ function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
   const resultsList = results.map((brand) => <BrandCardButton brand={brand} />);
 
   return (
-    <Modal>
+    <Modal focusTrapTriggers={[hasSearched]}>
       <h2 className="font-display font-bold text-2xl">Search for a brand</h2>
       <form onSubmit={handleSubmit} className="flex gap-2 items-center">
         <label className="sr-only" htmlFor="brand-search">
@@ -61,23 +64,15 @@ function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
           {resultsList}
         </div>
       )}
-      <div className={clsx("grid", { "grid-cols-2": hasSearched })}>
+      {hasSearched && (
         <Button
           variant="secondary"
           onClick={() => openModal(<CreateBrandModal />)}
-          className="justify-self-start"
-          hidden={!hasSearched}
+          className="mr-auto"
         >
           + New Brand
         </Button>
-        {/* <Button
-          variant="secondary"
-          onClick={handleClose}
-          className="justify-self-end"
-        >
-          Close
-        </Button> */}
-      </div>
+      )}
     </Modal>
   );
 }

@@ -1,47 +1,7 @@
-import { isSameDay } from "date-fns";
-import { getDatesInTimeframe, WEEKDAYS } from "./datetime";
+import { isSameDay, isSameWeek, format } from "date-fns";
+import { getDatesInTimeframe, getWeeksInTimeFrame, WEEKDAYS } from "./datetime";
 import type { DrinkLog } from "../api/drinkLog";
 import calculateStandardDrinks from "./calculateStandardDrinks";
-
-// const startTime = new Date().getTime();
-// const { startDate, endDate } = getWeekStartAndEndDate(
-//   new Date(2024, 0, 14)
-// );
-// const drinkLog = await fetchDrinkLog(startDate, endDate);
-// const timeframe = getDatesInTimeframe(startDate, endDate);
-// const WEEKDAYS = [
-//   "Sunday",
-//   "Monday",
-//   "Tuesday",
-//   "Wednesday",
-//   "Thursday",
-//   "Friday",
-//   "Saturday",
-// ];
-// const dataset = timeframe.map((date, i) => {
-//   const dailyLog = drinkLog.filter((log: any) =>
-//     isSameDay(new Date(log.timestamp), date)
-//   );
-//   const count = dailyLog.length;
-//   const standardDrinks = dailyLog.reduce((acc: number, log: any) => {
-//     return (
-//       acc + calculateStandardDrinks(log.volume, log.beverage.abv)
-//     );
-//   }, 0);
-//   return {
-//     day: WEEKDAYS[i],
-//     Containers: count,
-//     "Standard Drinks": standardDrinks,
-//   };
-// });
-// console.log(dataset);
-// const endTime = new Date().getTime();
-// console.log(
-//   "time ellapsed:",
-//   (endTime - startTime) / 1000,
-//   "seconds"
-// );
-// return { drinkLog, startDate, endDate, dataset };
 
 export function formatBarChartDataset(
   data: DrinkLog[],
@@ -61,6 +21,36 @@ export function formatBarChartDataset(
     );
     return {
       day: WEEKDAYS[i],
+      Containers: count,
+      "Standard Drinks": standardDrinks,
+    };
+  });
+
+  return dataset;
+}
+
+export function formatMonthDataset(
+  data: DrinkLog[],
+  startDate: Date,
+  endDate: Date
+) {
+  const weeks = getWeeksInTimeFrame(startDate, endDate);
+  // const timeframe = getDatesInTimeframe(startDate, endDate);
+  const dataset = weeks.map((week, i) => {
+    const weeklyLog = data.filter((log) =>
+      // isSameDay(new Date(log.timestamp), date)
+      isSameWeek(new Date(log.timestamp), week.start)
+    );
+    const count = weeklyLog.length;
+    const standardDrinks = weeklyLog.reduce(
+      (acc: number, log) =>
+        acc + calculateStandardDrinks(log.volume, log.beverage.abv),
+      0
+    );
+    return {
+      // day: WEEKDAYS[i],
+      weekStart: week.start,
+      day: format(week.start, "M/d") + " – " + format(week.end, "M/d"),
       Containers: count,
       "Standard Drinks": standardDrinks,
     };

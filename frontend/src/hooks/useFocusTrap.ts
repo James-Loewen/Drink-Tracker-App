@@ -1,16 +1,31 @@
 import { type MutableRefObject, useEffect } from "react";
 
-const focusableElemString =
-  "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
+const focusableElemArr = [
+  "a[href]",
+  "area[href]",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "button:not([disabled])",
+  "iframe",
+  "object",
+  "embed",
+  "*[tabindex]",
+  "*[contenteditable]",
+];
 
 function useFocusTrap(
   ref: MutableRefObject<HTMLElement | null>,
   closeFn: () => void,
-  disableScroll: boolean = false
+  disableScroll: boolean = false,
+  triggers: any[] = [],
+  clickOutsideToClose: boolean = false
 ) {
   useEffect(() => {
-    // ref.current *should* always be set by now,
-    // but to make TypeScript happy, we'll check.
+    /**
+     * ref.current *should* always be set by now,
+     * but to make TypeScript happy, we'll check.
+     */
     if (!ref.current) return;
 
     // Optionally, disable scrolling behind the modal
@@ -19,13 +34,17 @@ function useFocusTrap(
     }
 
     const node = ref.current;
-    const focusableElements =
-      node.querySelectorAll<HTMLElement>(focusableElemString);
+    const focusableElements = node.querySelectorAll<HTMLElement>(
+      focusableElemArr.join(", ")
+    );
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    // The wrapper <div> has a tabIndex of 0 so that it is focusable
-    // this ensures that focus is directed to the modal at open
+    /**
+     * The wrapper <div> should have a tabIndex of 0 so that it is focusable.
+     * This ensures that focus is directed to the modal at open without focusing
+     * a specific element within the modal.
+     */
     node.focus();
 
     const handleKeydown = (e: KeyboardEvent) => {
@@ -48,6 +67,7 @@ function useFocusTrap(
       if (!node.contains(e.target as HTMLElement)) {
         e.preventDefault();
         e.stopPropagation();
+        if (clickOutsideToClose) closeFn();
       }
     };
 
@@ -66,7 +86,7 @@ function useFocusTrap(
       document.removeEventListener("mousedown", handleMouseEvents, options);
       document.removeEventListener("click", handleMouseEvents, options);
     };
-  }, [ref]);
+  }, [ref, ...triggers]);
 }
 
 export default useFocusTrap;

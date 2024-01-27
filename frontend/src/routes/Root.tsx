@@ -3,19 +3,27 @@ import Header from "../components/Header";
 import ModalManager from "../components/modals/ModalManager";
 
 function Root() {
+  const linkText = "font-display text-xl hover:underline";
+
   return (
     <>
       <Header />
       <nav>
         <ul className="flex gap-8 justify-center">
           <li>
-            <Link to="/drink-log">Year</Link>
+            <Link className={linkText} to="/graph/week">
+              Week
+            </Link>
           </li>
           <li>
-            <Link to="/graph/week/?w=1">Month</Link>
+            <Link className={linkText} to="/graph/month">
+              Month
+            </Link>
           </li>
           <li>
-            <Link to="/graph/week">Week</Link>
+            <Link className={linkText} to="/drink-log">
+              Log
+            </Link>
           </li>
         </ul>
       </nav>

@@ -74,8 +74,8 @@ export function getMonthStartAndEndDate(
   }
 
   return {
-    startDate: startOfMonth(date),
-    endDate: endOfMonth(date),
+    startDate: startOfWeek(startOfMonth(date)),
+    endDate: endOfWeek(endOfMonth(date)),
   };
 }
 
@@ -102,4 +102,16 @@ export function getDatesInTimeframe(startDate: Date, endDate: Date) {
   }
   dates.push(currDate);
   return dates;
+}
+
+export function getWeeksInTimeFrame(startDate: Date, endDate: Date) {
+  const weeks: { start: Date; end: Date }[] = [];
+  let currDate = startDate;
+  while (!(currDate > endDate)) {
+    const start = currDate;
+    const end = addDays(currDate, 6);
+    weeks.push({ start, end });
+    currDate = addDays(currDate, 7);
+  }
+  return weeks;
 }

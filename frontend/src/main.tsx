@@ -12,13 +12,17 @@ import LandingPage from "./routes/LandingPage";
 import Search from "./routes/Search";
 import Login from "./routes/Login";
 import WeekView from "./routes/WeekView";
+import MonthView from "./routes/MonthView";
 import "./index.css";
 import {
   getWeekStartAndEndDate,
   getMonthStartAndEndDate,
 } from "./utils/datetime";
 import { fetchDrinkLog } from "./api/drinkLog";
-import { formatBarChartDataset } from "./utils/formatDataset";
+import {
+  formatBarChartDataset,
+  formatMonthDataset,
+} from "./utils/formatDataset";
 import { ModalProvider } from "./context/ModalContext";
 import LogListView from "./routes/LogListView";
 
@@ -48,6 +52,18 @@ const router = createBrowserRouter([
           const { startDate, endDate } = getWeekStartAndEndDate(weekOffset);
           const drinkLog = await fetchDrinkLog(startDate, endDate);
           const dataset = formatBarChartDataset(drinkLog, startDate, endDate);
+          return { drinkLog, startDate, endDate, dataset };
+        },
+      },
+      {
+        path: "month/",
+        element: <MonthView />,
+        loader: async ({ request }) => {
+          const url = new URL(request.url);
+          const monthOffset = parseInt(url.searchParams.get("m") ?? "0");
+          const { startDate, endDate } = getMonthStartAndEndDate(monthOffset);
+          const drinkLog = await fetchDrinkLog(startDate, endDate);
+          const dataset = formatMonthDataset(drinkLog, startDate, endDate);
           return { drinkLog, startDate, endDate, dataset };
         },
       },

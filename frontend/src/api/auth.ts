@@ -75,10 +75,13 @@ export async function logout() {
     },
   });
   if (res.status === 200) {
-    console.log("Logged out!");
-    // window.location.assign("/login");
     window.location.assign("/");
   } else {
-    console.log("What the hell happened...");
+    /**
+     * Most likely a CSRF issue. This won't be a problem if the /auth/user
+     * endpoint sets CSRF cookies on GET requests, but as of right now I
+     * don't know how to do that with Django Ninja, so I'll continue to
+     * use the Django Rest Framework endpoint I wrote.
+     */
   }
 }

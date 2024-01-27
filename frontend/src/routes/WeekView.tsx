@@ -1,16 +1,18 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import type { BarDatum } from "@nivo/bar";
-import BarChart from "../components/BarChart";
-import { type DrinkLog } from "../api/drinkLog";
-import type { Beverage } from "../api/search";
-import SearchBeverageModal from "../components/modals/SearchBeverageModal";
-import { useModal } from "../context/ModalContext";
-import clsx from "clsx";
 
+import type { DrinkLog } from "../api/drinkLog";
+import type { Beverage } from "../api/search";
+import { useModal } from "../context/ModalContext";
+import { toDateString } from "../utils/datetime";
+import generateAxisTicks from "../utils/generateAxisTicks";
+
+import BarChart from "../components/BarChart";
 import BeverageCardButton from "../components/BeverageCardButton";
+import SearchBeverageModal from "../components/modals/SearchBeverageModal";
+import BarChartHeader from "../components/BarChartHeader";
 
 import plusIcon from "../assets/plus.svg";
-import { toDateString } from "../utils/datetime";
 
 interface WeekViewLoaderData {
   drinkLog: DrinkLog[];
@@ -59,84 +61,23 @@ function WeekView() {
   const { drinkLog, dataset, startDate, endDate } =
     useLoaderData() as WeekViewLoaderData;
   const { openModal } = useModal();
-  const url = new URL(window.location.href);
-  const weekOffset = +(url.searchParams.get("w") ?? 0);
-  const navigate = useNavigate();
-
-  const chevronBase = "p-2 bg-slate-400/30 rounded-[50%] transition-colors";
-
-  const leftChevron = clsx(chevronBase, "hover:bg-slate-400/40");
-
-  const rightChevron = clsx(chevronBase, {
-    "text-neutral-400/80 cursor-default": weekOffset === 0,
-    "hover:bg-slate-400/40": weekOffset !== 0,
-  });
-
-  function prevWeek() {
-    url.searchParams.set("w", `${weekOffset + 1}`);
-    navigate(url.pathname + url.search);
-  }
-
-  function nextWeek() {
-    if (weekOffset === 0) {
-      return;
-    } else if (weekOffset === 1) {
-      url.search = "";
-    } else {
-      url.searchParams.set("w", `${weekOffset - 1}`);
-    }
-
-    navigate(url.pathname + url.search);
-  }
 
   return (
     <main className="mx-auto w-[min(800px,_100%)]">
-      <div className="p-4 flex gap-2 justify-between items-center">
-        <button onClick={prevWeek} className={leftChevron}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-labelledby="prev-btn"
-          >
-            <polyline points="14 18 8 12 14 6"></polyline>
-          </svg>
-          <span id="prev-btn" className="sr-only">
-            Previous
-          </span>
-        </button>
-        <h1 className="font-bold font-display text-center text-xl">
-          {toDateString(startDate)} – {toDateString(endDate)}
-        </h1>
-        <button onClick={nextWeek} className={rightChevron}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-labelledby="next-btn"
-          >
-            <polyline points="10 18 16 12 10 6"></polyline>
-          </svg>
-          <span id="next-btn" className="sr-only text-black">
-            Next
-          </span>
-        </button>
-      </div>
-      <BarChart data={dataset} />
+      <BarChartHeader
+        title={`${toDateString(startDate)} – ${toDateString(endDate)}`}
+        offsetParam="w"
+      />
+      <BarChart
+        data={dataset}
+        indexBy="day"
+        tickValues={generateAxisTicks(dataset)}
+        indexLimit={4}
+        chartLimit={14}
+        truncFn={(v) => v.slice(0, 3)}
+      />
       <button
-        className="mx-auto my-4 px-2 py-1 flex gap-1 items-center bg-amber-500/50 font-display text-lg border-2 border-[#232232] rounded-lg shadow-1 hover:shadow-2 transition-shadow"
+        className="mx-auto my-4 px-3 py-2 flex gap-1 items-center bg-amber-500/50 font-display text-xl border-2 border-[#232232] rounded-lg shadow-1 hover:shadow-2 transition-shadow"
         onClick={() => openModal(<SearchBeverageModal />)}
       >
         Log Beverage <img src={plusIcon} alt="plus symbol" />

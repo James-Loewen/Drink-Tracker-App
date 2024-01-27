@@ -46,12 +46,21 @@ class UserDetailSchema(ModelSchema):
 #     pass
 
 
-@router.get("/user", response=UserDetailSchema)
+@router.get("csrf/")
+@ensure_csrf_cookie
+def get_csrf_token(request):
+    """
+    # Returns a valid csrf token
+    """
+    return HttpResponse()
+
+
+@router.get("user/", response=UserDetailSchema)
 def user_detail(request):
     return request.user
 
 
-@router.put("/user", response=UserDetailSchema)
+@router.put("user/", response=UserDetailSchema)
 def update_user(request, data: UserUpdateSchema):
     user = request.user
     data_dict = data.dict(exclude_unset=True)
@@ -67,7 +76,7 @@ def update_user(request, data: UserUpdateSchema):
     return user
 
 
-@router.post("/login", auth=None)
+@router.post("login", auth=None)
 def user_login(request, data: LogInSchema):
     username_or_email = data.username_or_email
     password = data.password
@@ -84,7 +93,7 @@ def user_login(request, data: LogInSchema):
     return {"message": "You fuckin' suck.", "success": False}
 
 
-@router.post("/logout")
+@router.post("logout")
 def user_logout(request):
     res = django_logout(request)
     print(res)

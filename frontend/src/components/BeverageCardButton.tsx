@@ -1,4 +1,5 @@
 import clsx from "clsx";
+
 import type { Beverage } from "../api/search";
 import { useModal } from "../context/ModalContext";
 
@@ -18,10 +19,10 @@ function BeverageCardButton({ beverage }: BeverageCardButtonProps) {
 
   const buttonClass = clsx(
     "px-3 py-2 w-full",
-    "grid grid-cols-[1fr,_9ch] gap-3 justify-items-start",
+    "grid grid-cols-[1fr,_9ch] gap-2 justify-items-start",
     "border-2 border-black rounded-lg",
     "shadow-1 hover:shadow-2",
-    "font-display text-base sm:text-base leading-none",
+    "font-display text-base sm:text-lg leading-none",
     "transition-shadow"
   );
 

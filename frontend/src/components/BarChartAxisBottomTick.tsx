@@ -2,10 +2,16 @@ import type { AxisTickProps } from "@nivo/axes";
 
 interface BarChartAxisBottomTickProps extends AxisTickProps<any> {
   screenWidth: number;
+  truncFn?: (value: string) => string;
 }
 
 function BarChartAxisBottomTick(props: BarChartAxisBottomTickProps) {
-  const value = props.screenWidth > 720 ? props.value : props.value.slice(0, 3);
+  let value: string;
+  if (props.truncFn) {
+    value = props.screenWidth > 720 ? props.value : props.truncFn(props.value);
+  } else {
+    value = props.value;
+  }
 
   return (
     <g transform={`translate(${props.x},${props.y})`}>
