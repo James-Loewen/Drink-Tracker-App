@@ -1,0 +1,28 @@
+.inactive {
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  text-underline-offset: 0;
+  transition-property:
+    text-decoration-thickness,
+    text-decoration-color,
+    text-underline-offset;
+  transition-timing-function: ease;
+  transition-duration: 150ms;
+
+  &:hover {
+    text-decoration-color: theme("colors.gold.default" / 60%);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+  }
+}
+
+.active {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-decoration-color: theme("colors.teal");
+  text-underline-offset: 3px;
+  transition: text-decoration-color ease 150ms;
+}

@@ -141,21 +141,23 @@ function LogListView() {
   });
 
   return (
-    <main className="">
+    <main className="mx-auto w-[min(100%,_800px)]">
       <TimeframePicker
         title={format(startDate, "LLLL, yyyy")}
         offsetParam="m"
       />
-      <table className="mx-auto my-4 w-[min(720px,_95%)] border-collapse border border-slate-500/20">
-        <thead>
-          <tr className="sr-only">
-            <th>Beer</th>
-            <th>Vol</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        {list}
-      </table>
+      <div className="mx-auto my-4 w-[min(720px,_95%)] rounded-xl overflow-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="sr-only">
+              <th>Beer</th>
+              <th>Vol</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          {list}
+        </table>
+      </div>
     </main>
   );
 }
