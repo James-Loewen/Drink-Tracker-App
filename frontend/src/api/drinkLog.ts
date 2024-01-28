@@ -1,4 +1,4 @@
-import { authFetch } from "./auth";
+import { authFetch, API_PATH } from "./auth";
 import { toCustomIsoFormat } from "../utils/datetime";
 import type { Beverage } from "./search";
 import { getCsrfCookie } from "../utils/cookies";
@@ -13,8 +13,8 @@ export interface DrinkLog {
 export async function fetchDrinkLog(startDate: Date, endDate: Date) {
   const startDateString = toCustomIsoFormat(startDate, "start");
   const endDateString = toCustomIsoFormat(endDate, "end");
-  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
-  const drinkLogUrl = new URL("http://localhost:8000/api/drink-log/");
+  // const drinkLogUrl = new URL(`${API_PATH}/drink-log/`);
+  const drinkLogUrl = new URL(`${API_PATH}/api/drink-log/`);
   const searchParams = new URLSearchParams({
     startDate: startDateString,
     endDate: endDateString,
@@ -30,8 +30,8 @@ export async function postDrinkLog(
   volume: number,
   beverageId: number
 ) {
-  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
-  const drinkLogUrl = new URL("http://localhost:8000/api/drink-log/");
+  // const drinkLogUrl = new URL(`${API_PATH}/drink-log/`);
+  const drinkLogUrl = new URL(`${API_PATH}/api/drink-log/`);
   const res = await authFetch(drinkLogUrl, {
     credentials: "include",
     method: "POST",
@@ -46,8 +46,8 @@ export async function postDrinkLog(
 }
 
 export async function deleteDrinkLog(id: number) {
-  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
-  const drinkLogUrl = new URL(`http://localhost:8000/api/drink-log/${id}`);
+  // const drinkLogUrl = new URL(`${API_PATH}/drink-log/`);
+  const drinkLogUrl = new URL(`${API_PATH}/api/drink-log/${id}`);
   const res = await fetch(drinkLogUrl, {
     credentials: "include",
     method: "DELETE",
@@ -66,8 +66,8 @@ export async function updateDrinkLog(
   volume: number,
   beverageId: number
 ) {
-  // const drinkLogUrl = new URL("http://localhost:8000/drink-log/");
-  const drinkLogUrl = new URL(`http://localhost:8000/api/drink-log/${id}`);
+  // const drinkLogUrl = new URL(`${API_PATH}/drink-log/`);
+  const drinkLogUrl = new URL(`${API_PATH}/api/drink-log/${id}`);
   const res = await authFetch(drinkLogUrl, {
     credentials: "include",
     method: "PUT",

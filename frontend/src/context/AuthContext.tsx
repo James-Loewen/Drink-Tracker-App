@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { login, logout, type LoginResponseType } from "../api/auth";
+import { login, logout, type LoginResponseType, API_PATH } from "../api/auth";
 
 type UserDetails = {
   full_name: string;
@@ -33,8 +33,8 @@ export function AuthProvider({ children }: AuthProps) {
 
   useEffect(() => {
     async function fetchUserDetails() {
-      // const res = await fetch("http://localhost:8000/api/auth/user/", {
-      const res = await fetch("http://localhost:8000/auth/user/", {
+      // const res = await fetch(`${API_PATH}/api/auth/user/`, {
+      const res = await fetch(`${API_PATH}/auth/user/`, {
         method: "GET",
         credentials: "include",
       });

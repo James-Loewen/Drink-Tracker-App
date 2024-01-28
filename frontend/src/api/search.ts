@@ -1,4 +1,4 @@
-import { authFetch } from "../api/auth";
+import { authFetch, API_PATH } from "../api/auth";
 import { getCsrfCookie } from "../utils/cookies";
 
 export interface Category {
@@ -30,8 +30,8 @@ type PaginatedBeverages = PaginatedResults<Beverage>;
 type PaginatedBrands = PaginatedResults<Brand>;
 
 export async function queryBeverages(query: string) {
-  // const url = new URL("http://localhost:8000/beverages/");
-  const url = new URL("http://localhost:8000/api/beverages/");
+  // const url = new URL(`${API_PATH}/beverages/`);
+  const url = new URL(`${API_PATH}/api/beverages/`);
   url.searchParams.set("q", query);
   const res = await authFetch(url, { credentials: "include" });
   const data: PaginatedBeverages = await res.json();
@@ -49,7 +49,7 @@ export async function createBeverage(
   categoryId: number,
   brandId: number
 ) {
-  const url = new URL("http://localhost:8000/api/beverages/");
+  const url = new URL(`${API_PATH}/api/beverages/`);
   const res = await authFetch(url, {
     credentials: "include",
     method: "POST",
@@ -68,8 +68,8 @@ export async function createBeverage(
 }
 
 export async function queryBrands(query: string) {
-  // const url = new URL("http://localhost:8000/beverages/brands/");
-  const url = new URL("http://localhost:8000/api/beverages/brands/");
+  // const url = new URL(`${API_PATH}/beverages/brands/`);
+  const url = new URL(`${API_PATH}/api/beverages/brands/`);
   url.searchParams.set("q", query);
   const res = await authFetch(url, { credentials: "include" });
   const data: PaginatedBrands = await res.json();
@@ -82,7 +82,7 @@ export async function queryBrands(query: string) {
 }
 
 export async function createBrand(brandName: string) {
-  const url = new URL("http://localhost:8000/api/beverages/brands/");
+  const url = new URL(`${API_PATH}/api/beverages/brands/`);
   const res = await authFetch(url, {
     credentials: "include",
     method: "POST",
@@ -96,7 +96,7 @@ export async function createBrand(brandName: string) {
 }
 
 export async function getCategories() {
-  const url = new URL("http://localhost:8000/api/beverages/categories/");
+  const url = new URL(`${API_PATH}/api/beverages/categories/`);
   const res = await authFetch(url, { credentials: "include" });
   const data = res.json();
   return data;
