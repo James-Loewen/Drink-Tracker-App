@@ -16,15 +16,18 @@ function NavTabs() {
    * the initial navPath state, but it works for now.
    */
   useEffect(() => {
-    const currPath = window.location.pathname
-      .split("/")
-      .filter((s) => s !== "");
-    setNavPath(currPath[currPath.length - 1] as NavPaths);
+    const pathArr = window.location.pathname.split("/").filter((s) => s !== "");
+
+    let currPath = pathArr[pathArr.length - 1];
+    if (!["week", "month", "drink-log"].includes(currPath)) {
+      currPath = "week";
+    }
+
+    setNavPath(currPath as NavPaths);
   }, []);
 
   function handleNavPath(path: NavPaths) {
     function inner() {
-      console.log("Path:", path);
       setNavPath(path);
     }
     return inner;
