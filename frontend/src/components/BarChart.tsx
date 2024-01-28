@@ -3,7 +3,10 @@ import { clsx } from "clsx";
 import { CartesianMarkerProps, DatumValue } from "@nivo/core";
 
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import type { CustomToolTipType } from "./CustomToolTip";
+
 import BarChartAxisBottomTick from "./BarChartAxisBottomTick";
+import CustomToolTip from "./CustomToolTip";
 
 // @ts-ignore
 const STUFF_THAT_IS_DIFFERENT = [
@@ -34,6 +37,7 @@ function BarChart({
   truncFn,
 }: BarChartProps) {
   const { width } = useWindowDimensions();
+  console.log(width);
 
   const maxValue = tickValues ? tickValues[tickValues.length - 1] : undefined;
 
@@ -103,6 +107,17 @@ function BarChart({
             tickRotation: 0,
             tickValues,
           }}
+          /**
+           * TODO: Figure out how to get TypeScript to not complain about this
+           */
+          // @ts-ignore
+          tooltip={(toolTipProps: CustomToolTipType) => (
+            <CustomToolTip
+              toolTipProps={toolTipProps}
+              screenWidth={width}
+              limit={indexLimit}
+            />
+          )}
           label={""}
           theme={{
             text: { fontSize: 16, fontFamily: "monospace" },

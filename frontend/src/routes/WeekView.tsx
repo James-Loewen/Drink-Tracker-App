@@ -64,6 +64,8 @@ function WeekView() {
   const { drinkLog, dataset, startDate, endDate } =
     useLoaderData() as WeekViewLoaderData;
 
+  console.log(dataset);
+
   return (
     <main className="mx-auto w-[min(800px,_100%)]">
       <TimeframePicker
