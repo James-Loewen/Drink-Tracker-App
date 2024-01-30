@@ -36,7 +36,7 @@ export function formatMonthDataset(
 ) {
   const weeks = getWeeksInTimeFrame(startDate, endDate);
   // const timeframe = getDatesInTimeframe(startDate, endDate);
-  const dataset = weeks.map((week, i) => {
+  const dataset = weeks.map((week) => {
     const weeklyLog = data.filter((log) =>
       // isSameDay(new Date(log.timestamp), date)
       isSameWeek(new Date(log.timestamp), week.start)

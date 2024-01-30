@@ -1,7 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/ModalContext";
-import BeverageSearchModal from "./SearchBeverageModal";
 import Button from "../Button";
 import Modal from "./BaseModal";
 import { toCustomIsoFormat } from "../../utils/datetime";
@@ -22,7 +21,7 @@ function EditLogModal({ drinkLog }: EditLogModalProps) {
   const [volume, setVolume] = useState(millilitersToOunces(drinkLog.volume));
   const [date, setDate] = useState(logDate);
   const [time, setTime] = useState(logTime.slice(0, 5));
-  const { openModal, closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const navigate = useNavigate();
 
