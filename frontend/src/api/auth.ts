@@ -1,7 +1,7 @@
 import { getCsrfCookie } from "../utils/cookies";
 
 export const API_PATH = import.meta.env.PROD
-  ? "/api"
+  ? "https://drink-tracker.app/api"
   : `${import.meta.env.VITE_HOST}/api`;
 
 type LoginDataType = {
