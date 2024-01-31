@@ -43,6 +43,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "corsheaders",
 ]
 
 PROJECT_APPS = [
@@ -56,6 +57,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -151,8 +153,14 @@ REST_FRAMEWORK = {
 }
 
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", [])
+CSRF_COOKIE_DOMAIN = env("CSRF_COOKIE_DOMAIN", None)
 
 SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", True)
+SESSION_COOKIE_DOMAIN = env("SESSION_COOKIE_DOMAIN", None)
+
+# Cors Headers
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", [])
+CORS_ALLOW_CREDENTIALS = True
 
 # Django-Ninja Settings
 NINJA_PAGINATION_PER_PAGE = 50
