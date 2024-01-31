@@ -30,7 +30,7 @@ type PaginatedBeverages = PaginatedResults<Beverage>;
 type PaginatedBrands = PaginatedResults<Brand>;
 
 export async function queryBeverages(query: string) {
-  const url = new URL(`${API_PATH}/beverages`);
+  const url = new URL(`${API_PATH}/beverages/`);
   url.searchParams.set("q", query);
   const res = await authFetch(url, { credentials: "include" });
   const data: PaginatedBeverages = await res.json();
@@ -48,7 +48,7 @@ export async function createBeverage(
   categoryId: number,
   brandId: number
 ) {
-  const url = new URL(`${API_PATH}/beverages`);
+  const url = new URL(`${API_PATH}/beverages/`);
   const res = await authFetch(url, {
     credentials: "include",
     method: "POST",
@@ -67,8 +67,7 @@ export async function createBeverage(
 }
 
 export async function queryBrands(query: string) {
-  // const url = new URL(`${API_PATH}/beverages/brands/`);
-  const url = new URL(`${API_PATH}/beverages/brands`);
+  const url = new URL(`${API_PATH}/beverages/brands/`);
   url.searchParams.set("q", query);
   const res = await authFetch(url, { credentials: "include" });
   const data: PaginatedBrands = await res.json();
@@ -81,7 +80,7 @@ export async function queryBrands(query: string) {
 }
 
 export async function createBrand(brandName: string) {
-  const url = new URL(`${API_PATH}/beverages/brands`);
+  const url = new URL(`${API_PATH}/beverages/brands/`);
   const res = await authFetch(url, {
     credentials: "include",
     method: "POST",
@@ -95,7 +94,7 @@ export async function createBrand(brandName: string) {
 }
 
 export async function getCategories() {
-  const url = new URL(`${API_PATH}/beverages/categories`);
+  const url = new URL(`${API_PATH}/beverages/categories/`);
   const res = await authFetch(url, { credentials: "include" });
   const data = res.json();
   return data;
