@@ -47,9 +47,9 @@ function TimeframePicker({ title, offsetParam }: TimeframePickerProps) {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           aria-labelledby="prev-btn"
         >
           <polyline points="14 18 8 12 14 6"></polyline>
@@ -67,9 +67,9 @@ function TimeframePicker({ title, offsetParam }: TimeframePickerProps) {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           aria-labelledby="next-btn"
         >
           <polyline points="10 18 16 12 10 6"></polyline>

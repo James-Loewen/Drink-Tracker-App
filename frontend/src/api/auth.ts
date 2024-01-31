@@ -1,8 +1,8 @@
 import { getCsrfCookie } from "../utils/cookies";
 
 export const API_PATH = import.meta.env.PROD
-  ? ""
-  : `${import.meta.env.VITE_HOST}`;
+  ? "/api"
+  : `${import.meta.env.VITE_HOST}/api`;
 
 type LoginDataType = {
   success: boolean;
@@ -38,8 +38,7 @@ export async function login(username_or_email: string, password: string) {
   let success: boolean = false;
   let message: string = "insert message here..";
 
-  // const res = await fetch(`${API_PATH}/auth/login/`, {
-  const res = await fetch(`${API_PATH}/api/auth/login`, {
+  const res = await fetch(`${API_PATH}/auth/login`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -66,8 +65,7 @@ export async function login(username_or_email: string, password: string) {
 }
 
 export async function logout() {
-  // const res = await fetch(`${API_PATH}/auth/logout/`, {
-  const res = await fetch(`${API_PATH}/api/auth/logout`, {
+  const res = await fetch(`${API_PATH}/auth/logout`, {
     credentials: "include",
     method: "POST",
     headers: {

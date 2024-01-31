@@ -37,7 +37,9 @@ function SearchBrandModal({ searchText = "" }: SearchBrandModalProps) {
     setHasSearched(true);
   }
 
-  const resultsList = results.map((brand) => <BrandCardButton brand={brand} />);
+  const resultsList = results.map((brand, i) => (
+    <BrandCardButton key={i} brand={brand} />
+  ));
 
   return (
     <Modal focusTrapTriggers={[hasSearched]}>

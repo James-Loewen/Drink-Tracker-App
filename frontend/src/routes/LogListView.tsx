@@ -32,7 +32,7 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
     );
 
     return (
-      <tr>
+      <tr key={i}>
         <td className={clsx(tdClass, "pr-3 pl-2")}>{log.beverage.name}</td>
         <td className={clsx(tdClass, "whitespace-nowrap")}>
           {millilitersToOunces(log.volume)} oz.
@@ -52,9 +52,9 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="w-5 h-5 sm:w-6 sm:h-6"
             >
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -74,9 +74,9 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="w-5 h-5 sm:w-6 sm:h-6"
             >
               <polyline points="3 6 5 6 21 6"></polyline>
@@ -132,12 +132,12 @@ function LogListView() {
     timeframe = getDatesInTimeframe(startDate, new Date()).reverse();
   }
 
-  const list = timeframe.map((date) => {
+  const list = timeframe.map((date, i) => {
     const dailyLog = drinkLog.filter((log) =>
       isSameDay(date, new Date(log.timestamp))
     );
 
-    return <LogListDayTable dailyLog={dailyLog} date={date} />;
+    return <LogListDayTable key={i} dailyLog={dailyLog} date={date} />;
   });
 
   return (

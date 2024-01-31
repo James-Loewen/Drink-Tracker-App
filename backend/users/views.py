@@ -144,6 +144,7 @@ class UserDetailView(RetrieveUpdateAPIView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self):
+        print("Using the DRF user-detail endpoint")
         return self.request.user
 
     def get_queryset(self):

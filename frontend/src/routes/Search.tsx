@@ -15,8 +15,8 @@ function Search() {
     setResults(data.results);
   }
 
-  const resultsArray = results?.map((beverage) => (
-    <div className="px-2 py-1 border-2 border-blue-400 rounded-sm">
+  const resultsArray = results?.map((beverage, i) => (
+    <div key={i} className="px-2 py-1 border-2 border-blue-400 rounded-sm">
       <p className="text-gray-700">{beverage.brand.name}</p>
       <p className="text-gray-800 font-bold">{beverage.name}</p>
     </div>

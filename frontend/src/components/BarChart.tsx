@@ -37,7 +37,6 @@ function BarChart({
   truncFn,
 }: BarChartProps) {
   const { width } = useWindowDimensions();
-  console.log(width);
 
   const maxValue = tickValues ? tickValues[tickValues.length - 1] : undefined;
 

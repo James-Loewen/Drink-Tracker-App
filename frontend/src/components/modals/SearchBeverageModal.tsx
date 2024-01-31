@@ -37,8 +37,8 @@ function SearchBeverageModal({ searchText = "" }: SearchBeverageModalProps) {
     setHasSearched(true);
   }
 
-  const resultsList = results.map((beverage) => (
-    <BeverageCardButton beverage={beverage} />
+  const resultsList = results.map((beverage, i) => (
+    <BeverageCardButton key={i} beverage={beverage} />
   ));
 
   return (

@@ -34,9 +34,9 @@ function RecentBeverageCards({ drinkLog }: RecentBeverageCardsProps) {
     }
   }
 
-  const beverageList = nonRepeatingBeverages.map((bev) => {
+  const beverageList = nonRepeatingBeverages.map((bev, i) => {
     return (
-      <li>
+      <li key={i}>
         <BeverageCardButton key={bev.id} beverage={bev} />
       </li>
     );
@@ -63,8 +63,6 @@ function RecentBeverageCards({ drinkLog }: RecentBeverageCardsProps) {
 function WeekView() {
   const { drinkLog, dataset, startDate, endDate } =
     useLoaderData() as WeekViewLoaderData;
-
-  console.log(dataset);
 
   return (
     <main className="mx-auto w-[min(800px,_100%)]">

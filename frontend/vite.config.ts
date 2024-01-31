@@ -13,4 +13,5 @@ export default defineConfig({
       localsConvention: "camelCaseOnly",
     },
   },
+  build: { chunkSizeWarningLimit: 1600 },
 });
