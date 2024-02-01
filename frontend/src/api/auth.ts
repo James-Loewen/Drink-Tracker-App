@@ -83,3 +83,40 @@ export async function logout() {
      */
   }
 }
+
+export async function register(
+  username: string,
+  email: string,
+  password1: string,
+  password2: string
+) {
+  let data: LoginDataType | null = null;
+  let error: ErrorType | null = null;
+  let success: boolean = false;
+  let message: string = "insert message here..";
+
+  const res = await fetch(`${API_PATH}/auth/register`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCsrfCookie()!,
+    },
+    body: JSON.stringify({ username, email, password1, password2 }),
+  });
+
+  if (res.status === 200) {
+    data = await res.json();
+    if (data && data.success) {
+      success = data.success;
+      message = data.message;
+    }
+  } else {
+    const status = res.status;
+    const { detail } = await res.json();
+    error = { status, detail };
+    message = "Something ran amok";
+  }
+
+  return { error, data, success, message };
+}

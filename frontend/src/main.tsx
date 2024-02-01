@@ -26,6 +26,7 @@ import {
 } from "./utils/formatDataset";
 import { ModalProvider } from "./context/ModalContext";
 import LogListView from "./routes/LogListView";
+import Register from "./routes/Register";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
   {
     path: "login/",
     element: <Login />,
+  },
+  {
+    path: "register/",
+    element: <Register />,
   },
 ]);
 
