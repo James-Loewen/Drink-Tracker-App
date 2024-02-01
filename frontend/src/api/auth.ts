@@ -25,7 +25,7 @@ export async function authFetch(
 ) {
   const res = await fetch(input, init);
 
-  if (res.status === 403) {
+  if (res.status === 403 || res.status === 401) {
     window.location.assign("/login");
   }
 
