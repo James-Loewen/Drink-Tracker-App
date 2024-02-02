@@ -33,6 +33,8 @@ ENV BUILD_ENV ${BUILD_ENVIRONMENT}
 
 WORKDIR ${APP_HOME}
 
+RUN mkdir ${APP_HOME}/staticfiles
+
 RUN addgroup --system django \
   && adduser --system --ingroup django django
 

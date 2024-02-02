@@ -22,6 +22,7 @@ services:
       - postgres
     volumes:
       - ./backend:/app:z
+      - admin_staticfiles_volume:/app/staticfiles
     env_file:
       - ./.envs/.production/.django.env
       - ./.envs/.production/.postgres.env
@@ -40,9 +41,11 @@ services:
     volumes:
       - ./frontend:/app:z
       - /app/node_modules
+      - admin_staticfiles_volume:/app/staticfiles
     ports:
       - 80:80
       - 443:443
 
 volumes:
   drink_tracker_production_postgres_data:
+  admin_staticfiles_volume:
