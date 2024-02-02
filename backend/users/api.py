@@ -1,3 +1,8 @@
+from typing import TypeVar, Optional
+
+from pydantic import BaseModel
+from pydantic.generics import GenericModel
+
 from django.db.models import Q
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model, password_validation
@@ -10,12 +15,6 @@ from ninja import Router, Schema, ModelSchema
 User = get_user_model()
 
 router = Router()
-
-
-class MessageSchema(Schema):
-    success: bool
-    message: str = None
-    errors: list[str] = None
 
 
 class LogInSchema(Schema):
@@ -43,6 +42,13 @@ class UserDetailSchema(ModelSchema):
             "email",
             "full_name",
         ]
+
+
+class MessageSchema(Schema):
+    success: bool
+    message: str = None
+    errors: dict[str, list[str]] = None
+    data: UserDetailSchema = None
 
 
 class UserRegisterSchema(Schema):
@@ -93,7 +99,7 @@ def update_user(request, data: UserUpdateSchema):
     return user
 
 
-@router.post("login", auth=None)
+@router.post("login", response={200: MessageSchema, 400: MessageSchema}, auth=None)
 def user_login(request, data: LogInSchema):
     username_or_email = data.username_or_email
     password = data.password
@@ -103,11 +109,14 @@ def user_login(request, data: LogInSchema):
         )
         if user.check_password(password):
             django_login(request, user)
-            return {"message": "Successfully logged in.", "success": True}
+            return 200, {"success": True, "message": "Successfully logged in."}
     except User.DoesNotExist:
         User().set_password(password)
 
-    return {"message": "Something went wrong. Please try again.", "success": False}
+    return 400, {
+        "success": False,
+        "errors": {"general": ["Incorrect or invalid credentials"]},
+    }
 
 
 @router.post("logout")
@@ -118,25 +127,31 @@ def user_logout(request):
 
 @router.post(
     "register",
-    response={201: UserDetailSchema, 400: MessageSchema},
+    response={201: MessageSchema, 400: MessageSchema},
     auth=None,
 )
 def user_register(request, data: UserRegisterSchema):
     # Check that passwords match
     if data.password1 != data.password2:
-        return 400, {"success": False, "errors": ["Passwords didn't match."]}
+        return 400, {
+            "success": False,
+            "errors": {"password": ["Passwords did not match."]},
+        }
 
     # Validate password
     try:
         password_validation.validate_password(data.password1)
     except ValidationError as e:
-        return 400, {"success": False, "errors": e.messages}
+        return 400, {"success": False, "errors": {"password": e.messages}}
 
     # Check for existing users
     if User.objects.filter(
         Q(username=data.username.lower()) | Q(email=data.email.lower())
     ).exists():
-        return 400, {"success": False, "errors": ["Username or email already taken."]}
+        return 400, {
+            "success": False,
+            "errors": {"username": ["Username or email already taken."]},
+        }
 
     # Create User
     user_data = data.dict()
@@ -145,4 +160,4 @@ def user_register(request, data: UserRegisterSchema):
     user = User.objects.create(**user_data)
     user.set_password(password)
     user.save()
-    return 201, user
+    return 201, {"success": True, "message": "User created.", "data": user}

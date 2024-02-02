@@ -9,14 +9,17 @@ import {
   login,
   logout,
   API_PATH,
-  type LoginResponseType,
+  type LoginRegisterResponseType,
   type UserDetails,
 } from "../api/auth";
 
 type AuthContextType = {
   user: UserDetails | null;
   setUser: React.Dispatch<React.SetStateAction<UserDetails | null>>;
-  login: (username: string, password: string) => Promise<LoginResponseType>;
+  login: (
+    username: string,
+    password: string
+  ) => Promise<LoginRegisterResponseType>;
   logout: () => Promise<void>;
 };
 

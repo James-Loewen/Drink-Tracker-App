@@ -19,6 +19,7 @@ export default {
       boxShadow: {
         1: "#232232 -1px 2px",
         2: "#232232 -2px 4px 1px",
+        danger: "0 0 3px 1px #933232",
       },
     },
   },

@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from "react";
+import clsx from "clsx";
 
 import { login } from "../api/auth";
 
@@ -8,19 +9,22 @@ import { Link } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorText, setErrorText] = useState("");
+  const [errors, setErrors] = useState<string[]>([]);
 
   const labelGroup = "w-full flex flex-col items-start";
   const labelClass = "pl-2 font-display";
   const inputClass = "px-2 py-1 w-full border-2 border-[#232232]/60 rounded";
+  const errorClass = "font-mono text-danger";
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { data, error } = await login(username, password);
+    setErrors([]);
 
-    if (error) {
-      setErrorText(error.detail);
-    } else if (data) {
+    const { success, errors } = await login(username, password);
+
+    if (!success) {
+      setErrors(errors.general);
+    } else {
       window.location.assign("/graph/week");
     }
   }
@@ -30,10 +34,14 @@ function Login() {
       <h1 className="font-display font-bold text-4xl">Log In</h1>
       <form
         onSubmit={handleSubmit}
-        className="mb-[15vh] p-4 flex flex-col gap-2 items-end bg-[#FFFFF5] border-2 border-[#232232] rounded-lg shadow-2"
+        className="mb-[15vh] p-4 flex flex-col gap-2 items-end bg-slate-400/30 border-2 border-[#232232] rounded-lg shadow-2"
       >
-        {errorText && <code>{errorText}</code>}
         <div className={labelGroup}>
+          {errors.map((error, i) => (
+            <span key={i} className={errorClass}>
+              {error}
+            </span>
+          ))}
           <label className={labelClass} htmlFor="username">
             Username or Email
           </label>
@@ -43,7 +51,7 @@ function Login() {
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className={inputClass}
+            className={clsx(inputClass, errors.length > 0 && "shadow-danger")}
           />
         </div>
         <div className={labelGroup}>
@@ -56,7 +64,7 @@ function Login() {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={inputClass}
+            className={clsx(inputClass, errors.length > 0 && "shadow-danger")}
           />
         </div>
         <div className="mt-4 p-1 flex gap-4 sm:gap-6 items-center">

@@ -4,11 +4,6 @@ export const API_PATH = import.meta.env.PROD
   ? "https://drink-tracker.app/api"
   : `${import.meta.env.VITE_HOST}/api`;
 
-type LoginDataType = {
-  success: boolean;
-  message: "Successfully logged in.";
-};
-
 export type UserDetails = {
   full_name: string;
   display_username: string;
@@ -16,14 +11,11 @@ export type UserDetails = {
   email: string;
 };
 
-type ErrorType = {
-  status: number;
-  detail: string;
-};
-
-export type LoginResponseType = {
-  error: ErrorType | null;
-  data: LoginDataType | null;
+export type LoginRegisterResponseType = {
+  success: boolean;
+  errors: { [key: string]: string[] };
+  message: string;
+  data?: UserDetails | null;
 };
 
 export async function authFetch(
@@ -39,12 +31,10 @@ export async function authFetch(
   return res;
 }
 
-export async function login(username_or_email: string, password: string) {
-  let data: LoginDataType | null = null;
-  let error: ErrorType | null = null;
-  let success: boolean = false;
-  let message: string = "insert message here..";
-
+export async function login(
+  username_or_email: string,
+  password: string
+): Promise<LoginRegisterResponseType> {
   const res = await fetch(`${API_PATH}/auth/login`, {
     credentials: "include",
     method: "POST",
@@ -55,20 +45,10 @@ export async function login(username_or_email: string, password: string) {
     body: JSON.stringify({ username_or_email, password }),
   });
 
-  if (res.status === 200) {
-    data = await res.json();
-    if (data && data.success) {
-      success = data.success;
-      message = data.message;
-    }
-  } else {
-    const status = res.status;
-    const { detail } = await res.json();
-    error = { status, detail };
-    message = "Something ran amok";
-  }
+  const { success, message, errors }: LoginRegisterResponseType =
+    await res.json();
 
-  return { error, data, success, message };
+  return { errors, success, message };
 }
 
 export async function logout() {
@@ -96,12 +76,7 @@ export async function register(
   email: string,
   password1: string,
   password2: string
-) {
-  let data: UserDetails | null = null;
-  let success: boolean = false;
-  let message: string = "";
-  let errors: string[] = [];
-
+): Promise<LoginRegisterResponseType> {
   const res = await fetch(`${API_PATH}/auth/register`, {
     credentials: "include",
     method: "POST",
@@ -112,14 +87,8 @@ export async function register(
     body: JSON.stringify({ username, email, password1, password2 }),
   });
 
-  if (res.status === 201) {
-    data = await res.json();
-    success = true;
-    message = "User created.";
-  } else if (res.status === 400) {
-    const err_res = await res.json();
-    errors = err_res.errors;
-  }
+  const { data, success, message, errors }: LoginRegisterResponseType =
+    await res.json();
 
   return { data, success, message, errors };
 }
