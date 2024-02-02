@@ -21,7 +21,7 @@ function CustomToolTip({
     "relative top-2 px-2 py-1 bg-white/80 rounded-lg",
     "flex flex-col items-center justify-items-center",
     "font-display text-sm sm:text-base",
-    "border-2 border-[#232232] shadow-1",
+    "border-2 border-raisin-black shadow-1",
     {
       "right-[60px]": toolTipProps.x > screenWidth / 2,
       "left-[60px]": toolTipProps.x <= screenWidth / 2,

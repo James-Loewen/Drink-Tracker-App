@@ -24,7 +24,7 @@ function LogListDayTable({ dailyLog, date }: LogListDayTableProps) {
 
   const dailyList = dailyLog.map((log, i) => {
     const tdClass = clsx(
-      "px-1 py-2 border-slate-700/20 text-[#232232] text-sm sm:text-base",
+      "px-1 py-2 border-slate-700/20 text-raisin-black text-sm sm:text-base",
       {
         "bg-neutral-700/15": i % 2 !== 0,
         "bg-neutral-300/20": i % 2 === 0,

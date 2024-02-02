@@ -15,7 +15,7 @@ function Register() {
 
   const labelGroup = "w-full flex flex-col items-start";
   const labelClass = "pl-2 font-display";
-  const inputClass = "px-2 py-1 w-full border-2 border-[#232232]/60 rounded";
+  const inputClass = "px-2 py-1 w-full border-2 border-raisin-black/60 rounded";
   const errorClass = "font-mono text-danger";
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -48,7 +48,7 @@ function Register() {
       <h1 className="font-display font-bold text-4xl">Sign Up</h1>
       <form
         onSubmit={handleSubmit}
-        className="mb-[15vh] p-4 flex flex-col gap-1 items-end bg-slate-400/30 border-2 border-[#232232] rounded-lg shadow-2"
+        className="mb-[15vh] p-4 flex flex-col gap-1 items-end bg-slate-400/30 border-2 border-raisin-black rounded-lg shadow-2"
       >
         <div className={labelGroup}>
           <label className={labelClass} htmlFor="username">

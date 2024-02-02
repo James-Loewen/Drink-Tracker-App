@@ -7,7 +7,7 @@ function LogBeverageButton() {
 
   return (
     <button
-      className="group mx-auto my-6 sm:my-8 px-3 py-2 flex gap-1 items-center bg-amber-500/50 font-display text-xl border-2 border-[#232232] rounded-lg shadow-1 hover:shadow-2 transition-shadow"
+      className="group mx-auto my-6 sm:my-8 px-3 py-2 flex gap-1 items-center bg-amber-500/50 font-display text-xl border-2 border-raisin-black rounded-lg shadow-1 hover:shadow-2 transition-shadow"
       onClick={() => openModal(<SearchBeverageModal />)}
     >
       Log Beverage{" "}

@@ -64,7 +64,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
             onChange={(e) => setVolume(+e.target.value)}
           />
           <select
-            className="px-2 py-1 mr-6 bg-transparent border-b-[3px] border-[#232232] text-lg"
+            className="px-2 py-1 mr-6 bg-transparent border-b-[3px] border-raisin-black text-lg"
             name="volume-unit"
             id="volume-unit"
             value={volumeUnit}

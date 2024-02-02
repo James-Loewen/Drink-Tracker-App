@@ -18,7 +18,7 @@
   display: block;
   width: var(--menu-bar-width);
   height: var(--menu-bar-thickness);
-  background-color: #22232a;
+  background-color: theme("colors.raisin-black");
   border-radius: 1000px;
   transition: all ease 300ms;
 }

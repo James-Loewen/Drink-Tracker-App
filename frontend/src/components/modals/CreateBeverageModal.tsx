@@ -65,7 +65,7 @@ function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
     <Modal>
       <h2 className="font-display font-bold text-2xl">Add New Beverage</h2>
       <details className="cursor-pointer">
-        <summary className="flex gap-1 items-center text-[#232232]">
+        <summary className="flex gap-1 items-center text-raisin-black">
           <span>Notice</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
