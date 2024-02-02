@@ -9,6 +9,13 @@ type LoginDataType = {
   message: "Successfully logged in.";
 };
 
+export type UserDetails = {
+  full_name: string;
+  display_username: string;
+  display_name: string;
+  email: string;
+};
+
 type ErrorType = {
   status: number;
   detail: string;
@@ -90,10 +97,10 @@ export async function register(
   password1: string,
   password2: string
 ) {
-  let data: LoginDataType | null = null;
-  let error: ErrorType | null = null;
+  let data: UserDetails | null = null;
   let success: boolean = false;
-  let message: string = "insert message here..";
+  let message: string = "";
+  let errors: string[] = [];
 
   const res = await fetch(`${API_PATH}/auth/register`, {
     credentials: "include",
@@ -105,18 +112,14 @@ export async function register(
     body: JSON.stringify({ username, email, password1, password2 }),
   });
 
-  if (res.status === 200) {
+  if (res.status === 201) {
     data = await res.json();
-    if (data && data.success) {
-      success = data.success;
-      message = data.message;
-    }
-  } else {
-    const status = res.status;
-    const { detail } = await res.json();
-    error = { status, detail };
-    message = "Something ran amok";
+    success = true;
+    message = "User created.";
+  } else if (res.status === 400) {
+    const err_res = await res.json();
+    errors = err_res.errors;
   }
 
-  return { error, data, success, message };
+  return { data, success, message, errors };
 }

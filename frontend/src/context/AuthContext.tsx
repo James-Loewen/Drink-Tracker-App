@@ -5,14 +5,13 @@ import {
   useState,
   useEffect,
 } from "react";
-import { login, logout, type LoginResponseType, API_PATH } from "../api/auth";
-
-type UserDetails = {
-  full_name: string;
-  display_username: string;
-  display_name: string;
-  email: string;
-};
+import {
+  login,
+  logout,
+  API_PATH,
+  type LoginResponseType,
+  type UserDetails,
+} from "../api/auth";
 
 type AuthContextType = {
   user: UserDetails | null;

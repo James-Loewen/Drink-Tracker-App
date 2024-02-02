@@ -1,14 +1,21 @@
 from django.db.models import Q
 from django.http import HttpResponse
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth import logout as django_logout, login as django_login
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt, csrf_protect
+from django.core.exceptions import ValidationError
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from ninja import Router, Schema, ModelSchema
 
 User = get_user_model()
 
 router = Router()
+
+
+class MessageSchema(Schema):
+    success: bool
+    message: str = None
+    errors: list[str] = None
 
 
 class LogInSchema(Schema):
@@ -36,6 +43,15 @@ class UserDetailSchema(ModelSchema):
             "email",
             "full_name",
         ]
+
+
+class UserRegisterSchema(Schema):
+    username: str
+    email: str
+    full_name: str = ""
+    display_name: str = ""
+    password1: str
+    password2: str
 
 
 # TODO: add /register endpoint
@@ -91,11 +107,42 @@ def user_login(request, data: LogInSchema):
     except User.DoesNotExist:
         User().set_password(password)
 
-    return {"message": "You fuckin' suck.", "success": False}
+    return {"message": "Something went wrong. Please try again.", "success": False}
 
 
 @router.post("logout")
 def user_logout(request):
-    res = django_logout(request)
-    print(res)
+    django_logout(request)
     return {"message": "Successfully logged out.", "success": True}
+
+
+@router.post(
+    "register",
+    response={201: UserDetailSchema, 400: MessageSchema},
+    auth=None,
+)
+def user_register(request, data: UserRegisterSchema):
+    # Check that passwords match
+    if data.password1 != data.password2:
+        return 400, {"success": False, "errors": ["Passwords didn't match."]}
+
+    # Validate password
+    try:
+        password_validation.validate_password(data.password1)
+    except ValidationError as e:
+        return 400, {"success": False, "errors": e.messages}
+
+    # Check for existing users
+    if User.objects.filter(
+        Q(username=data.username.lower()) | Q(email=data.email.lower())
+    ).exists():
+        return 400, {"success": False, "errors": ["Username or email already taken."]}
+
+    # Create User
+    user_data = data.dict()
+    user_data.pop("password2")
+    password = user_data.pop("password1")
+    user = User.objects.create(**user_data)
+    user.set_password(password)
+    user.save()
+    return 201, user

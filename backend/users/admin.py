@@ -28,8 +28,8 @@ class UserAdmin(DjangoUserAdmin):
         ["Important dates", {"fields": ["last_login", "date_joined"]}],
     ]
     list_display = [
-        "display_name",
         "username",
+        "display_name",
         "email",
         "full_name",
         "is_superuser",
