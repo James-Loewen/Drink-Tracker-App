@@ -95,9 +95,6 @@ class RegisterUserView(CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def validate_username_email_uniqueness(self, username, email):
-        print(
-            self.queryset.filter(Q(username=username.lower()) | Q(email=email.lower()))
-        )
         if self.queryset.filter(
             Q(username=username.lower()) | Q(email=email.lower())
         ).exists():
@@ -144,7 +141,6 @@ class UserDetailView(RetrieveUpdateAPIView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self):
-        print("Using the DRF user-detail endpoint")
         return self.request.user
 
     def get_queryset(self):

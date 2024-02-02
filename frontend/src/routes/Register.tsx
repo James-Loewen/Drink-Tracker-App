@@ -31,7 +31,6 @@ function Register() {
     );
 
     if (!success && errors !== null) {
-      console.log(errors);
       if (errors.password) {
         setPasswordError(errors.password);
       }

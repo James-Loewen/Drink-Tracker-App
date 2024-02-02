@@ -79,7 +79,6 @@ def get_csrf_token(request):
 
 @router.get("user/", response=UserDetailSchema)
 def user_detail(request):
-    print("Using the Django Ninja user-detail endpoint")
     return request.user
 
 
