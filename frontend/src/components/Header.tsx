@@ -1,5 +1,5 @@
-import { type MouseEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 
 import { useAuth } from "../context/AuthContext";
@@ -10,15 +10,15 @@ import styles from "./Header.module.css";
 function Header() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const { logout } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  function handleNavigate(e: MouseEvent<HTMLAnchorElement>) {
-    e.preventDefault();
-    const anchor = e.target as HTMLAnchorElement;
-    const { pathname, search } = new URL(anchor.href);
-    setMenuIsOpen(false);
-    navigate(pathname + search);
-  }
+  // function handleNavigate(e: MouseEvent<HTMLAnchorElement>) {
+  //   e.preventDefault();
+  //   const anchor = e.target as HTMLAnchorElement;
+  //   const { pathname, search } = new URL(anchor.href);
+  //   setMenuIsOpen(false);
+  //   navigate(pathname + search);
+  // }
 
   return (
     <header className="mx-auto w-[min(100%,_800px)] h-12 relative">
