@@ -155,7 +155,7 @@ function LogListView() {
               <th>Time</th>
             </tr>
           </thead>
-          {list}
+          <tbody>{list}</tbody>
         </table>
       </div>
     </main>
