@@ -24,7 +24,7 @@ interface CreateBeverageModalProps {
 
 function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
   const [name, setName] = useState("");
-  const [abv, setAbv] = useState<number>(5.0);
+  const [abv, setAbv] = useState("5.0");
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryId, setCategoryId] = useState<number>();
 
@@ -39,8 +39,9 @@ function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
 
   async function handleSubmit(e: FormOrMouseEvent) {
     e.preventDefault();
-    if (name === "" || categoryId === undefined) return;
-    const res = await createBeverage(name, abv, categoryId, brand.id);
+    if (name === "" || categoryId === undefined || abv === "" || isNaN(+abv))
+      return;
+    const res = await createBeverage(name, +abv, categoryId, brand.id);
 
     if (res.status === 400) {
       console.log("TODO: Handle validation errors here...");
@@ -127,7 +128,7 @@ function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
           name="abv"
           id="abv"
           value={abv}
-          onChange={(e) => setAbv(+e.target.value)}
+          onChange={(e) => setAbv(e.target.value)}
           step={0.1}
           min={0}
           max={99}
@@ -136,6 +137,7 @@ function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
           <Button
             className="flex gap-2 items-center group"
             variant="secondary"
+            type="button"
             onClick={() => openModal(<SearchBrandModal />)}
           >
             <svg
@@ -155,9 +157,7 @@ function CreateBeverageModal({ brand }: CreateBeverageModalProps) {
             </svg>
             Brand Search
           </Button>
-          <Button type="submit" onClick={handleSubmit}>
-            + Add
-          </Button>
+          <Button type="submit">+ Add</Button>
         </div>
       </form>
     </Modal>
