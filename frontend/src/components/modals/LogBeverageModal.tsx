@@ -17,7 +17,7 @@ interface LogBeverageModalProps {
 
 function LogBeverageModal({ beverage }: LogBeverageModalProps) {
   const [currentDate, currentTime] = toCustomIsoFormat(new Date()).split(" ");
-  const [volume, setVolume] = useState(12);
+  const [volume, setVolume] = useState("12");
   const [volumeUnit, setVolumeUnit] = useState<"oz" | "mL">("oz");
   const [date, setDate] = useState(currentDate);
   const [time, setTime] = useState(currentTime.slice(0, 5));
@@ -27,7 +27,16 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const mL = ouncesToMilliliters(volume);
+
+    if (isNaN(+volume)) {
+      /**
+       * The browser should handle input validation, but I may need
+       * to implement an [errors, setErrors] state at some point.
+       */
+      return;
+    }
+
+    const mL = ouncesToMilliliters(+volume);
     const timestamp = `${date} ${time}`;
     await postDrinkLog(timestamp, mL, beverage.id);
     const path = window.location.pathname;
@@ -61,7 +70,8 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
             type="number"
             value={volume}
             step={0.1}
-            onChange={(e) => setVolume(+e.target.value)}
+            min={0}
+            onChange={(e) => setVolume(e.target.value)}
           />
           <select
             className="px-2 py-1 mr-6 bg-transparent border-b-[3px] border-raisin-black text-lg"
