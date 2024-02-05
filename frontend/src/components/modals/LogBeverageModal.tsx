@@ -28,10 +28,14 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (isNaN(+volume)) {
+    if (volume === "" || isNaN(+volume)) {
       /**
        * The browser should handle input validation, but I may need
        * to implement an [errors, setErrors] state at some point.
+       *
+       * Well apparently FireFox on mobile does not support HTML
+       * validation yet. It sounds like I should implement some kind
+       * of custom client-side validation.
        */
       return;
     }
@@ -70,7 +74,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
             type="number"
             value={volume}
             step={0.1}
-            min={0}
+            min={1}
             onChange={(e) => setVolume(e.target.value)}
           />
           <select
@@ -104,7 +108,6 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
           id="time"
           type="time"
           value={time}
-          // max={currentTime}
           onChange={(e) => setTime(e.target.value)}
           required
         />
@@ -112,6 +115,7 @@ function LogBeverageModal({ beverage }: LogBeverageModalProps) {
           <Button
             className="flex gap-2 items-center group"
             variant="secondary"
+            type="button"
             onClick={() =>
               openModal(<SearchBeverageModal searchText={beverage.name} />)
             }
