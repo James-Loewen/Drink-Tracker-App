@@ -52,7 +52,11 @@ function useFocusTrap(
         if (!e.shiftKey && document.activeElement === lastElement) {
           firstElement.focus();
           e.preventDefault();
-        } else if (e.shiftKey && document.activeElement === firstElement) {
+        } else if (
+          e.shiftKey &&
+          (document.activeElement === firstElement ||
+            document.activeElement === node)
+        ) {
           lastElement.focus();
           e.preventDefault();
         }
