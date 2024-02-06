@@ -77,15 +77,17 @@ function CreateBrandModal() {
           value={brandName}
           onChange={(e) => setBrandName(e.target.value)}
         />
+        <div className="mt-2 flex gap-2 justify-end">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => closeModal()}
+          >
+            Cancel
+          </Button>
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
-      <div className="flex gap-2 justify-end">
-        <Button variant="secondary" onClick={() => closeModal()}>
-          Cancel
-        </Button>
-        <Button type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
-      </div>
     </Modal>
   );
 }

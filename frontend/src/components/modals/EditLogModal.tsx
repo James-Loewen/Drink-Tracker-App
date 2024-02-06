@@ -18,7 +18,9 @@ function EditLogModal({ drinkLog }: EditLogModalProps) {
   const [logDate, logTime] = toCustomIsoFormat(
     new Date(drinkLog.timestamp)
   ).split(" ");
-  const [volume, setVolume] = useState(millilitersToOunces(drinkLog.volume));
+  const [volume, setVolume] = useState(
+    `${millilitersToOunces(drinkLog.volume)}`
+  );
   const [date, setDate] = useState(logDate);
   const [time, setTime] = useState(logTime.slice(0, 5));
   const { closeModal } = useModal();
@@ -27,7 +29,18 @@ function EditLogModal({ drinkLog }: EditLogModalProps) {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const mL = ouncesToMilliliters(volume);
+
+    if (volume === "" || isNaN(+volume)) {
+      /**
+       * Adding `required` to the input[type="number"] seems to fix the
+       * empty string -> 0 bug, but I'm going to leave the check in for now.
+       *
+       * Implement validation errors handling here...
+       */
+      return;
+    }
+
+    const mL = ouncesToMilliliters(+volume);
     const timestamp = `${date} ${time}`;
     await updateDrinkLog(drinkLog.id, timestamp, mL, drinkLog.beverage.id);
     const path = window.location.pathname;
@@ -51,8 +64,10 @@ function EditLogModal({ drinkLog }: EditLogModalProps) {
             id="volume"
             type="number"
             value={volume}
+            min={1}
             step={0.1}
-            onChange={(e) => setVolume(+e.target.value)}
+            onChange={(e) => setVolume(e.target.value)}
+            required
           />
         </div>
         <div className="flex gap-2 items-center">
@@ -84,7 +99,11 @@ function EditLogModal({ drinkLog }: EditLogModalProps) {
           />
         </div>
         <div className="py-2 flex gap-2 justify-end">
-          <Button variant="secondary" onClick={() => closeModal()}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => closeModal()}
+          >
             Cancel
           </Button>
           <Button type="submit">Save</Button>

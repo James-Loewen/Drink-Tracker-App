@@ -52,6 +52,7 @@ function Login() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className={clsx(inputClass, errors.length > 0 && "shadow-danger")}
+            required
           />
         </div>
         <div className={labelGroup}>
@@ -65,6 +66,7 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={clsx(inputClass, errors.length > 0 && "shadow-danger")}
+            required
           />
         </div>
         <div className="mt-4 p-1 flex gap-4 sm:gap-6 items-center">

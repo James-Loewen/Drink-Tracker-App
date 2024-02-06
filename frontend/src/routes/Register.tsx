@@ -69,6 +69,7 @@ function Register() {
               inputClass,
               usernameError.length > 0 && "shadow-danger"
             )}
+            required
           />
         </div>
         <div className={labelGroup}>
@@ -85,6 +86,7 @@ function Register() {
               inputClass,
               usernameError.length > 0 && "shadow-danger"
             )}
+            required
           />
         </div>
         <div className={labelGroup}>
@@ -106,6 +108,7 @@ function Register() {
               inputClass,
               passwordError.length > 0 && "shadow-danger"
             )}
+            required
           />
         </div>
         <div className={labelGroup}>
@@ -122,6 +125,7 @@ function Register() {
               inputClass,
               passwordError.length > 0 && "shadow-danger"
             )}
+            required
           />
         </div>
         <div className="mt-4 p-1 flex gap-4 sm:gap-6 items-center">
