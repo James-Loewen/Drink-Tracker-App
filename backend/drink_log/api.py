@@ -1,5 +1,5 @@
 from typing import List
-from datetime import datetime, date
+from datetime import date
 
 from django.db import models
 from django.db.models import Sum, Count, F, ExpressionWrapper, fields

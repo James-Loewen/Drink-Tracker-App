@@ -1,0 +1,9 @@
+Reported object type: {{ reported_object_type }}
+Reported object id: {{ reported_object_id }}
+URL: <a href="https://drink-tracker.app{{ url }}">The beverage...</a>
+
+User email: {{ user_email }}
+
+User comment:
+
+{{ text }}

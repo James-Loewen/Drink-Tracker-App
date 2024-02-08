@@ -9,4 +9,4 @@ CACHES = {
     }
 }
 
-EMAIL_BACKEND = "django.core.mail.backend.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

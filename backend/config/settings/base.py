@@ -50,6 +50,7 @@ PROJECT_APPS = [
     "users",
     "beverages",
     "drink_log",
+    "reports",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
